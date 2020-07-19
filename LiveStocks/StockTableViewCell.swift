@@ -10,8 +10,8 @@ import UIKit
 
 class StockTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var cost: UILabel!
-
+    @IBOutlet weak var price: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,8 +23,13 @@ class StockTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configureCell(stock:Stock) {
-        name.text = stock.name
-        cost.text = "\(stock.cost)"
+    func configureCell(name: String) {
+        self.name.text = name
+        
+        // Use handler from Stock function to display price (async call)
+        Stock.getQuote(name: name) { (price) in
+            self.price.text = "\(price)"
+        }
+        
     }
 }

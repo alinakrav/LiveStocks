@@ -9,16 +9,14 @@
 import Foundation
 
 class StockModel {
-    let stockNames = ["AAPL", "VET"]
+    // replaced Stock object array with String array of just names, since I can't add price to objects anyway
     
-    func getStocks() -> [Stock] {
-        var stockList = [Stock]()
-        
-        let stock1 = Stock(name: stockNames[0], cost: 350)
-        let stock2 = Stock(name: stockNames[1], cost: 4.2)
-        
-        stockList += [stock1, stock2]
-        // TODO: request data for elems
+    var stockList = [String]()
+    
+    func getStocks() -> [String] {
+        // At the moment, stock array is made here
+
+        stockList += ["AAPL", "IBM", "VET", "SPOT", "OXY"]
         
         // return stock data
         return stockList

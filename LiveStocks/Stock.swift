@@ -9,11 +9,32 @@
 import Foundation
 
 class Stock {
+    // Class/Object is unnecessary right now, unable to add price
     var name : String
-    var cost : Double
+    var price : Double
     
-    init(name:String, cost:Double) {
+    init(name:String, price:Double) {
         self.name = name
-        self.cost = cost
+        self.price = price
+    }
+    
+    // Async call to get quote - can only be used whenever price display is needed immediately
+    static func getQuote(name: String, completion: @escaping (Double) -> Void) {
+        // API call
+        let url = URL(string: "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=\(name)&apikey=NYOTFMCNEXDFEB2D")!
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data, error == nil {
+                do {
+                    guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else { return }
+                    let quote = json["Global Quote"] as! [String: Any]
+                    let price = Double(quote["05. price"] as! String)
+                    DispatchQueue.main.async {
+                        completion(price!)
+                    }
+                } catch {
+                    print("Error retrieving quote from Alpha Vantage...")
+                }
+            }
+        }.resume()
     }
 }

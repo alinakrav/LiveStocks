@@ -13,14 +13,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     
     let model = StockModel()
-    var stockArr = [Stock]()
+    var stockArr = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         stockArr = model.getStocks()
-        // print(stockArr[0].name, stockArr[1].name)
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -37,7 +36,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "StockCell", for: indexPath) as! StockTableViewCell
         
         // TODO: configure
-        cell.configureCell(stock: stockArr[indexPath.row])
+        cell.configureCell(name: stockArr[indexPath.row])
         return cell
     }
 
