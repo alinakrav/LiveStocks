@@ -26,10 +26,12 @@ class StockTableViewCell: UITableViewCell {
     func configureCell(name: String) {
         self.name.text = name
         
+        /*
         // Use handler from Stock function to display price (async call)
         Stock.getQuote(name: name) { (price) in
             self.price.text = "\(price)"
         }
+ */
         
     }
 }

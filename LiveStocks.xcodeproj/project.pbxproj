@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C71E9FF324C54BDB003F3437 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E9FF224C54BDB003F3437 /* SearchViewController.swift */; };
 		C7C56BA224A93A4C005E9E7B /* StockTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C56BA124A93A4C005E9E7B /* StockTableViewCell.swift */; };
 		C7EBFE1824A7F4C0000D0AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EBFE1724A7F4C0000D0AB1 /* AppDelegate.swift */; };
 		C7EBFE1A24A7F4C0000D0AB1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EBFE1924A7F4C0000D0AB1 /* SceneDelegate.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C71E9FF224C54BDB003F3437 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C7978EF324C40C480078323F /* LiveStocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveStocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7C56BA124A93A4C005E9E7B /* StockTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTableViewCell.swift; sourceTree = "<group>"; };
 		C7EBFE1424A7F4C0000D0AB1 /* LiveStocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveStocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +93,7 @@
 				C7EBFE2224A7F4C3000D0AB1 /* LaunchScreen.storyboard */,
 				C7EBFE2024A7F4C3000D0AB1 /* Assets.xcassets */,
 				C7EBFE2524A7F4C3000D0AB1 /* Info.plist */,
+				C71E9FF224C54BDB003F3437 /* SearchViewController.swift */,
 			);
 			path = LiveStocks;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7EBFE2C24A7F70C000D0AB1 /* StockModel.swift in Sources */,
+				C71E9FF324C54BDB003F3437 /* SearchViewController.swift in Sources */,
 				C7EBFE1C24A7F4C0000D0AB1 /* ViewController.swift in Sources */,
 				C7EBFE1824A7F4C0000D0AB1 /* AppDelegate.swift in Sources */,
 				C7EBFE2E24A7F8E1000D0AB1 /* Stock.swift in Sources */,
@@ -400,6 +404,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PDJ952WGM;
 				INFOPLIST_FILE = LiveStocks/Info.plist;
@@ -409,6 +414,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = blank.LiveStocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -418,6 +424,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PDJ952WGM;
 				INFOPLIST_FILE = LiveStocks/Info.plist;
@@ -427,6 +434,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = blank.LiveStocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

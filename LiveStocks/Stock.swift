@@ -26,7 +26,8 @@ class Stock {
             if let data = data, error == nil {
                 do {
                     guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else { return }
-                    let quote = json["Global Quote"] as! [String: Any]
+                    // ignore error here, might be api limit
+                    guard let quote = try json["Global Quote"] as? [String: Any] else { return }
                     let price = Double(quote["05. price"] as! String)
                     DispatchQueue.main.async {
                         completion(price!)
