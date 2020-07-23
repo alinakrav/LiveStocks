@@ -12,7 +12,7 @@ class StockTableCell: UITableViewCell {
     
     
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var cost: UILabel!
+    @IBOutlet weak var price: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

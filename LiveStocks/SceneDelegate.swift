@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  test
+//  LiveStocks
 //
 //  Created by Alina Kravchenko on 2020-07-22.
 //  Copyright © 2020 LiveStocks. All rights reserved.

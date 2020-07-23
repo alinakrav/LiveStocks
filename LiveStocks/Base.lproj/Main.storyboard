@@ -6,16 +6,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Numbers-->
+        <!--Stocks-->
         <scene sceneID="ctU-3G-nzb">
             <objects>
-                <tableViewController id="kZm-hy-bbD" customClass="MainController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="kZm-hy-bbD" customClass="MainController" customModule="LiveStocks" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lJV-i5-FOf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.48661554944129004" green="0.75022290330216068" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StockCell" id="G17-Sl-X16" customClass="StockTableCell" customModule="test" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StockCell" id="G17-Sl-X16" customClass="StockTableCell" customModule="LiveStocks" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G17-Sl-X16" id="jSY-uL-Dwc">
@@ -29,7 +29,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eZ-4z-sid" userLabel="Cost">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eZ-4z-sid" userLabel="Price">
                                             <rect key="frame" x="277" y="10" width="94" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -39,8 +39,8 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="cost" destination="6eZ-4z-sid" id="1BG-14-21c"/>
                                     <outlet property="name" destination="sXi-n1-1Rb" id="c3q-NT-pbx"/>
+                                    <outlet property="price" destination="6eZ-4z-sid" id="Of8-Du-mm0"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -49,7 +49,7 @@
                             <outlet property="delegate" destination="kZm-hy-bbD" id="nMg-hs-Xl1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Numbers" id="I9k-hZ-ClN"/>
+                    <navigationItem key="navigationItem" title="Stocks" id="I9k-hZ-ClN"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="leO-ro-Gyy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
