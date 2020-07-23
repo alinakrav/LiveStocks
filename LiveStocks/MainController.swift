@@ -1,6 +1,6 @@
 //
-//  TableViewController.swift
-//  LiveStocks
+//  MainController.swift
+//  test
 //
 //  Created by Alina Kravchenko on 2020-07-22.
 //  Copyright © 2020 LiveStocks. All rights reserved.
@@ -8,11 +8,10 @@
 
 import UIKit
 
-class TableViewController: UITableViewController, UISearchResultsUpdating {
-    
-     var searchController = UISearchController(searchResultsController: nil)
-        var filteredStrings = [String]()//, tableData = [String]()
-        var tableData = ["One","Two","Three","Twenty-One"]
+class MainController: UITableViewController, UISearchResultsUpdating {
+    var searchController = UISearchController(searchResultsController: nil)
+        var filteredStrings = [String](), tableData = [String]()
+//        var tableData = ["One","Two","Three","Twenty-One"]
 
         
     //    func updateSearchResults(for searchController: UISearchController) {
@@ -90,7 +89,7 @@ class TableViewController: UITableViewController, UISearchResultsUpdating {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "StockTableViewCell", for: indexPath) as! StockTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StockCell", for: indexPath) as! StockTableCell
             
             if searchController.isActive {
                 cell.textLabel?.text = filteredStrings[indexPath.row]

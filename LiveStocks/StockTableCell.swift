@@ -8,27 +8,22 @@
 
 import UIKit
 
-class StockTableViewCell: UITableViewCell {
+class StockTableCell: UITableViewCell {
+    
+    
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var price: UILabel!
-    
-    
-    @IBOutlet weak var name2: UILabel!
-    @IBOutlet weak var cost2: UILabel!
+    @IBOutlet weak var cost: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func configureCell(name: String) {
-        self.name2.text = name
+        self.name.text = name
         
         /*
         // Use handler from Stock function to display price (async call)
