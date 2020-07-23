@@ -12,6 +12,10 @@ class StockTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var price: UILabel!
     
+    
+    @IBOutlet weak var name2: UILabel!
+    @IBOutlet weak var cost2: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,7 +28,7 @@ class StockTableViewCell: UITableViewCell {
     }
 
     func configureCell(name: String) {
-        self.name.text = name
+        self.name2.text = name
         
         /*
         // Use handler from Stock function to display price (async call)
