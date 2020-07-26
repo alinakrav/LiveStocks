@@ -11,11 +11,9 @@ import Foundation
 class Stock {
     // Class/Object is unnecessary right now, unable to add price
     var name : String
-    var price : Double
     
-    init(name:String, price:Double) {
+    init(name:String) {
         self.name = name
-        self.price = price
     }
     
     // Async call to get quote - can only be used whenever price display is needed immediately
@@ -26,11 +24,11 @@ class Stock {
             if let data = data, error == nil {
                 do {
                     guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else { return }
-                    // ignore error here, might be api limit
-                    guard let quote = try json["Global Quote"] as? [String: Any] else { return }
-                    let price = Double(quote["05. price"] as! String)
+                    // limit is 5 calls/minute, 500 calls/day
+                    guard let jsonQuote = try json["Global Quote"] as? [String: Any] else { return }
+                    let quote = jsonQuote["05. price"] as? String
                     DispatchQueue.main.async {
-                        completion(price!)
+                        completion(Double(quote!)!)
                     }
                 } catch {
                     print("Error retrieving quote from Alpha Vantage...")

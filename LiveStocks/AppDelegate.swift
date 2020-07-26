@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  LiveStocks
 //
-//  Created by Alina Kravchenko on 2020-07-22.
+//  Created by Alina Kravchenko on 2020-07-25.
 //  Copyright © 2020 LiveStocks. All rights reserved.
 //
 
