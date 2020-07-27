@@ -10,28 +10,35 @@ import Foundation
 
 class Stock {
     // Class/Object is unnecessary right now, unable to add price
-    var name : String
+    var symbol : String
+    var name: String
+    var currency: String
     
-    init(name:String) {
+    init(symbol: String) {
+        self.symbol = symbol
+        self.name = ""
+        self.currency = ""
+    }
+    
+    init(symbol: String, name: String, currency: String) {
+        self.symbol = symbol
         self.name = name
+        self.currency = currency
     }
     
     // Async call to get quote - can only be used whenever price display is needed immediately
-    static func getQuote(name: String, completion: @escaping (Double) -> Void) {
+    static func getQuote(symbol: String, completion: @escaping (Double) -> Void) {
         // API call
-        let url = URL(string: "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=\(name)&apikey=NYOTFMCNEXDFEB2D")!
+        let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/quote/latestPrice?token=pk_a85004ad0796453fb7110fad20e2a34a")!
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data, error == nil {
                 do {
-                    guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else { return }
-                    // limit is 5 calls/minute, 500 calls/day
-                    guard let jsonQuote = try json["Global Quote"] as? [String: Any] else { return }
-                    let quote = jsonQuote["05. price"] as? String
+                    guard let quote = try Double(String(data: data, encoding: .utf8)!) else { return }
                     DispatchQueue.main.async {
-                        completion(Double(quote!)!)
+                        completion(quote)
                     }
                 } catch {
-                    print("Error retrieving quote from Alpha Vantage...")
+                    print("Error retrieving quote from IEX Cloud...")
                 }
             }
         }.resume()

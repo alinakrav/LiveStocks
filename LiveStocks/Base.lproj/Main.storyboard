@@ -57,7 +57,7 @@
                     <navigationItem key="navigationItem" title="Stocks" id="Ne6-Zm-FMj">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="BYN-TH-CaS">
                             <connections>
-                                <segue destination="tEK-99-Jwa" kind="presentation" id="eLS-WP-DCp"/>
+                                <segue destination="h6Y-WM-LYr" kind="presentation" id="eLS-WP-DCp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -69,7 +69,7 @@
             </objects>
             <point key="canvasLocation" x="930.43478260869574" y="-67.633928571428569"/>
         </scene>
-        <!--Add Button Table View Controller-->
+        <!--Add New Stock-->
         <scene sceneID="Qet-zo-ckW">
             <objects>
                 <tableViewController id="tEK-99-Jwa" customClass="AddButtonTableViewController" customModule="LiveStocks" customModuleProvider="target" sceneMemberID="viewController">
@@ -78,12 +78,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="G3B-6t-JCW">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddStockCell" textLabel="Zkh-Kb-PiW" detailTextLabel="wWI-Dm-R9U" style="IBUITableViewCellStyleValue1" id="G3B-6t-JCW">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G3B-6t-JCW" id="A2a-fK-Qen">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zkh-Kb-PiW">
+                                            <rect key="frame" x="20" y="12" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wWI-Dm-R9U">
+                                            <rect key="frame" x="350" y="12" width="44" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -92,10 +108,11 @@
                             <outlet property="delegate" destination="tEK-99-Jwa" id="rdc-ld-eFb"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Add New Stock" id="88T-wD-Nn7"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lu2-Lw-kvW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1717" y="-68"/>
+            <point key="canvasLocation" x="2626.0869565217395" y="-68.303571428571431"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="N6g-Iv-yom">
@@ -114,6 +131,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ao8-mi-VLO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="164" y="-68"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="DJr-pj-RIv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="h6Y-WM-LYr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bJO-4Z-zyF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tEK-99-Jwa" kind="relationship" relationship="rootViewController" id="Ld9-8p-R2I"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BBA-qj-Y1k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1715.9420289855075" y="-68.303571428571431"/>
         </scene>
     </scenes>
 </document>

@@ -10,81 +10,108 @@ import UIKit
 
 class AddButtonTableViewController: UITableViewController {
 
+  var stocks = [Stock](), filteredStocks = [Stock]()
+  let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        setupSearchController()
+        loadStocks()
+        
+  }
+    
+  // MARK: - Custom methods
+    
+    func loadStocks() {
+      stocks = [
+        Stock(symbol:"VET"),
+        Stock(symbol:"OXY"),
+        Stock(symbol:"SPOT"),
+        Stock(symbol:"IBM"),
+        Stock(symbol:"AAPL"),
+        Stock(symbol:"NKLA"),
+        Stock(symbol:"TSLA"),
+        Stock(symbol:"MGI"),
+        Stock(symbol:"FOX"),
+        Stock(symbol:"CRON.TO")
+      ]
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    
+    func fillStockCell(cell: UITableViewCell, stock: Stock) {
+        cell.textLabel!.text = stock.symbol
+        cell.detailTextLabel!.text = "quote"
+//        Stock.getQuote(symbol: stock.symbol) { quote in
+//            cell.detailTextLabel!.text = "\(quote)"
+//        }
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+  
+    // MARK: - Standard methods
+    
+    func setupSearchController() {
+      searchController.searchResultsUpdater = self
+      definesPresentationContext = true
+      searchController.searchBar.delegate = self
+      self.navigationItem.searchController = searchController
     }
+    
+  func searchBarIsEmpty() -> Bool {
+    return searchController.searchBar.text?.isEmpty ?? true
+  }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+    // update table with searched items
+  func filterContentForSearchText(_ searchText: String) {
+    filteredStocks = stocks.filter({( stock : Stock) -> Bool in
+      return stock.symbol.lowercased().contains(searchText.lowercased())
+    })
+    tableView.reloadData()
+  }
 
-        // Configure the cell...
+    // is table being searched
+  func isFiltering() -> Bool {
+    return searchController.isActive && !searchBarIsEmpty()
+  }
 
-        return cell
+  // MARK: - Table View
+
+  override func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if isFiltering() {
+      return filteredStocks.count
     }
-    */
+    return stocks.count
+  }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "AddStockCell", for: indexPath)
+    // specify stock object to get data from
+    let stock: Stock
+    if isFiltering() {
+      stock = filteredStocks[indexPath.row]
+    } else {
+      stock = stocks[indexPath.row]
     }
-    */
+    // fill cell with stock data
+    fillStockCell(cell: cell, stock: stock)
+    return cell
+  }
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+}
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+extension AddButtonTableViewController: UISearchBarDelegate {
+  // MARK: - UISearchBar Delegate
+  func searchBar(_ searchBar: UISearchBar) {
+    filterContentForSearchText(searchBar.text!)
+  }
+}
 
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+extension AddButtonTableViewController: UISearchResultsUpdating {
+  // MARK: - UISearchResultsUpdating Delegate
+  func updateSearchResults(for searchController: UISearchController) {
+    filterContentForSearchText(searchController.searchBar.text!)
+  }
 }

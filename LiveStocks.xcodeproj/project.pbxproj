@@ -62,11 +62,11 @@
 		C7D2EACB24CC00DB00AAB658 /* LiveStocks */ = {
 			isa = PBXGroup;
 			children = (
-				C7D2EAD224CC00DB00AAB658 /* Main.storyboard */,
+				C7D2EAE224CCE43100AAB658 /* StockModel.swift */,
+				C7D2EAE324CCE43100AAB658 /* Stock.swift */,
 				C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */,
 				C736730224CD7DB800E1BA6D /* AddButtonTableViewController.swift */,
-				C7D2EAE324CCE43100AAB658 /* Stock.swift */,
-				C7D2EAE224CCE43100AAB658 /* StockModel.swift */,
+				C7D2EAD224CC00DB00AAB658 /* Main.storyboard */,
 				C7D2EAD524CC00DC00AAB658 /* Assets.xcassets */,
 				C7D2EADA24CC00DC00AAB658 /* Info.plist */,
 				C7D2EAD724CC00DC00AAB658 /* LaunchScreen.storyboard */,
