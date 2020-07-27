@@ -99,7 +99,6 @@ class AddButtonTableViewController: UITableViewController {
     fillStockCell(cell: cell, stock: stock)
     return cell
   }
-
 }
 
 extension AddButtonTableViewController: UISearchBarDelegate {

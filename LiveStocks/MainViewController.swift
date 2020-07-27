@@ -12,6 +12,7 @@ class MainViewController: UITableViewController {
     
     var stocks = [Stock](), filteredStocks = [Stock]()
     let searchController = UISearchController(searchResultsController: nil)
+    var searchTask: DispatchWorkItem?
     @IBOutlet weak var blankSpace: UILabel!
     
     override func viewDidLoad() {
@@ -41,12 +42,13 @@ class MainViewController: UITableViewController {
     func fillStockCell(cell: UITableViewCell, stock: Stock) {
         cell.textLabel!.text = stock.symbol
         cell.detailTextLabel!.text = "quote"
-//                Stock.getQuote(symbol: stock.symbol) { quote in
-//                    cell.detailTextLabel!.text = "\(quote)"
-//                }
+        //                Stock.getQuote(symbol: stock.symbol) { quote in
+        //                    cell.detailTextLabel!.text = "\(quote)"
+        //                }
     }
     
     func testJson(keyword: String, completion: @escaping ([Stock]) -> Void) {
+        let keyword = String(keyword.map { $0 == " " ? "+" : $0 })
         let url = URL(string: "https://api.tiingo.com/tiingo/utilities/search?query=\(keyword)&token=728db149992e36b1d617774af5921ae43cf53fcc")!
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data {
@@ -90,15 +92,20 @@ class MainViewController: UITableViewController {
     
     // update table with searched items
     func filterContentForSearchText(_ searchText: String) {
-//            filteredStocks = stocks.filter({( stock : Stock) -> Bool in
-//              return stock.symbol.lowercased().contains(searchText.lowercased())
-//            })
-//    tableView.reloadData()
-        testJson(keyword: searchText) { stockArr in
-            self.filteredStocks = stockArr
-        }
-        tableView.reloadData()
+        //            filteredStocks = stocks.filter({( stock : Stock) -> Bool in
+        //              return stock.symbol.lowercased().contains(searchText.lowercased())
+        //            })
         
+        // when no text is entered, show normal stock array
+        if searchBarIsEmpty() {
+            filteredStocks = stocks
+            tableView.reloadData()
+        } else {
+            testJson(keyword: searchText) { stockArr in
+                self.filteredStocks = stockArr
+                self.tableView.reloadData()
+            }
+        }
     }
     
     // is table being searched
@@ -132,7 +139,6 @@ class MainViewController: UITableViewController {
         fillStockCell(cell: cell, stock: stock)
         return cell
     }
-    
 }
 
 extension MainViewController: UISearchBarDelegate {
@@ -145,6 +151,14 @@ extension MainViewController: UISearchBarDelegate {
 extension MainViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+        // Cancel previous task if any
+        self.searchTask?.cancel()
+        // Replace previous task with a new one
+        let task = DispatchWorkItem { [weak self] in
+            self?.filterContentForSearchText(searchController.searchBar.text!)
+        }
+        self.searchTask = task
+        // Execute task in 0.75 seconds (if not cancelled !)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40, execute: task)
     }
 }
