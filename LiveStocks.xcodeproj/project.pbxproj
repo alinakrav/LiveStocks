@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C737BCC724D39D120025A09D /* CellTappedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737BCC624D39D120025A09D /* CellTappedViewController.swift */; };
+		C737BCC724D39D120025A09D /* StockHoldingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */; };
 		C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */; };
+		C7AED75324D5EF4A00BBEA2F /* Holding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AED75224D5EF4A00BBEA2F /* Holding.swift */; };
 		C7D2EACD24CC00DB00AAB658 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EACC24CC00DB00AAB658 /* AppDelegate.swift */; };
 		C7D2EACF24CC00DB00AAB658 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EACE24CC00DB00AAB658 /* SceneDelegate.swift */; };
 		C7D2EAD124CC00DB00AAB658 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */; };
@@ -20,8 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C737BCC624D39D120025A09D /* CellTappedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellTappedViewController.swift; sourceTree = "<group>"; };
+		C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHoldingsViewController.swift; sourceTree = "<group>"; };
 		C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHoldingViewController.swift; sourceTree = "<group>"; };
+		C7AED75224D5EF4A00BBEA2F /* Holding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Holding.swift; sourceTree = "<group>"; };
 		C7D2EAC924CC00DB00AAB658 /* LiveStocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveStocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7D2EACC24CC00DB00AAB658 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7D2EACE24CC00DB00AAB658 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,9 +67,10 @@
 			isa = PBXGroup;
 			children = (
 				C7D2EAE224CCE43100AAB658 /* StockModel.swift */,
+				C7AED75224D5EF4A00BBEA2F /* Holding.swift */,
 				C7D2EAE324CCE43100AAB658 /* Stock.swift */,
 				C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */,
-				C737BCC624D39D120025A09D /* CellTappedViewController.swift */,
+				C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */,
 				C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */,
 				C7D2EAD224CC00DB00AAB658 /* Main.storyboard */,
 				C7D2EAD524CC00DC00AAB658 /* Assets.xcassets */,
@@ -153,8 +156,9 @@
 				C7D2EAD124CC00DB00AAB658 /* MainViewController.swift in Sources */,
 				C7D2EAE424CCE43100AAB658 /* StockModel.swift in Sources */,
 				C7D2EAE524CCE43100AAB658 /* Stock.swift in Sources */,
-				C737BCC724D39D120025A09D /* CellTappedViewController.swift in Sources */,
+				C737BCC724D39D120025A09D /* StockHoldingsViewController.swift in Sources */,
 				C7D2EACD24CC00DB00AAB658 /* AppDelegate.swift in Sources */,
+				C7AED75324D5EF4A00BBEA2F /* Holding.swift in Sources */,
 				C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */,
 				C7D2EACF24CC00DB00AAB658 /* SceneDelegate.swift in Sources */,
 			);

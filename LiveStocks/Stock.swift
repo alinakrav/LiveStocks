@@ -13,7 +13,7 @@ class Stock {
     var symbol : String
     var name: String
     var currency: String
-    var shares = 0
+    var holdings = [Holding]()
     
     init(symbol: String) {
         self.symbol = symbol
@@ -28,13 +28,13 @@ class Stock {
     }
     
     // Async call to get quote - can only be used whenever price display is needed immediately
-    static func getQuote(symbol: String, completion: @escaping (Double) -> Void) {
+    static func getQuote(symbol: String, completion: @escaping (Float) -> Void) {
         // API call
         let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/quote/latestPrice?token=pk_a85004ad0796453fb7110fad20e2a34a")!
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data, error == nil {
                 do {
-                    guard let quote = try Double(String(data: data, encoding: .utf8)!) else { return }
+                    guard let quote = try Float(String(data: data, encoding: .utf8)!) else { return }
                     DispatchQueue.main.async {
                         completion(quote)
                     }

@@ -49,7 +49,7 @@
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <segue destination="W3L-hu-pf4" kind="presentation" id="mD8-Ki-Gpf"/>
+                                    <segue destination="W3L-hu-pf4" kind="presentation" identifier="cellTapped" id="mD8-Ki-Gpf"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -67,16 +67,16 @@
             </objects>
             <point key="canvasLocation" x="930.43478260869574" y="-67.633928571428569"/>
         </scene>
-        <!--Cell Tapped View Controller-->
+        <!--Stock Holdings View Controller-->
         <scene sceneID="Bgb-cx-nbb">
             <objects>
-                <tableViewController id="gs7-oN-bUp" customClass="CellTappedViewController" customModule="LiveStocks" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="gs7-oN-bUp" customClass="StockHoldingsViewController" customModule="LiveStocks" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="AlB-Jd-jx3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sharesCell" textLabel="GrP-zc-0wp" detailTextLabel="EVa-jV-FFL" style="IBUITableViewCellStyleValue1" id="buc-hg-ZvK">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="holdingCell" textLabel="GrP-zc-0wp" detailTextLabel="EVa-jV-FFL" style="IBUITableViewCellStyleValue1" id="buc-hg-ZvK">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="buc-hg-ZvK" id="YYf-1I-k8q">
@@ -107,15 +107,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="dqb-qH-Wqa">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="eh8-8R-AIu"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="eh8-8R-AIu">
+                            <connections>
+                                <segue destination="oeI-8a-Pe8" kind="unwind" unwindAction="unwindToOne:" id="h20-41-brU"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Yn9-k6-95S">
                             <connections>
-                                <segue destination="FPp-Gu-ZTG" kind="show" id="DUB-Jf-IAq"/>
+                                <segue destination="FPp-Gu-ZTG" kind="show" identifier="addHolding" id="DUB-Jf-IAq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OBf-EU-eP5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="oeI-8a-Pe8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2631.8840579710145" y="-68.303571428571431"/>
         </scene>
@@ -183,10 +188,14 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="c14-wo-cnj">
                             <connections>
                                 <action selector="save:" destination="DLD-Va-jVy" id="LeF-NI-sy1"/>
-                                <segue destination="DLD-Va-jVy" kind="unwind" unwindAction="unwindToOne:" id="9Yx-QW-kOs"/>
+                                <segue destination="DLD-Va-jVy" kind="unwind" identifier="saveHolding" unwindAction="unwindToOne:" id="9Yx-QW-kOs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="price" destination="PCc-Gy-S0N" id="BrT-YV-u7D"/>
+                        <outlet property="shares" destination="RPG-Gu-yhh" id="4St-Y0-PNG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSo-vY-5ao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="DLD-Va-jVy" userLabel="Exit" sceneMemberID="exit"/>

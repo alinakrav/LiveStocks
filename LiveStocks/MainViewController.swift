@@ -77,7 +77,7 @@ class MainViewController: UITableViewController {
         }
     }
     
-    // MARK: - Standard methods
+    // MARK: - Standard search methods
     
     func setupSearchController() {
         searchController.searchResultsUpdater = self
@@ -141,39 +141,37 @@ class MainViewController: UITableViewController {
         return cell
     }
     
-    // when table view cell is tapped
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        // Segue to the second view controller
-//        self.performSegue(withIdentifier: "cellTapped", sender: self)
-//    }
+    // MARK: - Navigation
     
-    // This function is called before the segue
+    // Called before cellTapped segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "cellTapped" else {return}
         // get a reference to the second view controller
         let navVC = segue.destination as? UINavigationController
-        let cellTappedVC = navVC?.topViewController as! CellTappedViewController
+        let stockHoldingsVC = navVC?.topViewController as! StockHoldingsViewController
 
-        // set a variable in the second view controller with the data to pass
-        cellTappedVC.stock = stocks[tableView.indexPathForSelectedRow!.row]
+        // pass cell stock to holdingsVC
+        stockHoldingsVC.stock = stocks[tableView.indexPathForSelectedRow!.row]
     
-    // trying
+    // delegate for swiping action
 //        navVC?.presentationController?.delegate = cellTappedVC as! UIAdaptivePresentationControllerDelegate
     }
     
+    // Called when other views exit back to main view
     @IBAction func unwindToOne(_ sender: UIStoryboardSegue) {}
     
 }
 
 
+// MARK: - UISearchBar Delegate
 extension MainViewController: UISearchBarDelegate {
-    // MARK: - UISearchBar Delegate
     func searchBar(_ searchBar: UISearchBar) {
         filterContentForSearchText(searchBar.text!)
     }
 }
 
+// MARK: - UISearchResultsUpdating Delegate
 extension MainViewController: UISearchResultsUpdating {
-    // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         // Cancel previous task if any
         self.searchTask?.cancel()
