@@ -42,9 +42,9 @@ class MainViewController: UITableViewController {
     func fillStockCell(cell: UITableViewCell, stock: Stock) {
         cell.textLabel!.text = stock.symbol
         cell.detailTextLabel!.text = "quote"
-        //                Stock.getQuote(symbol: stock.symbol) { quote in
-        //                    cell.detailTextLabel!.text = "\(quote)"
-        //                }
+//                        Stock.getQuote(symbol: stock.symbol) { quote in
+//                            cell.detailTextLabel!.text = "\(quote)"
+//                        }
     }
     
     func testJson(keyword: String, completion: @escaping ([Stock]) -> Void) {
@@ -81,7 +81,8 @@ class MainViewController: UITableViewController {
     
     func setupSearchController() {
         searchController.searchResultsUpdater = self
-        definesPresentationContext = true
+        definesPresentationContext = false
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         self.navigationItem.searchController = searchController
     }
@@ -139,7 +140,30 @@ class MainViewController: UITableViewController {
         fillStockCell(cell: cell, stock: stock)
         return cell
     }
+    
+    // when table view cell is tapped
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        // Segue to the second view controller
+//        self.performSegue(withIdentifier: "cellTapped", sender: self)
+//    }
+    
+    // This function is called before the segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // get a reference to the second view controller
+        let navVC = segue.destination as? UINavigationController
+        let cellTappedVC = navVC?.topViewController as! CellTappedViewController
+
+        // set a variable in the second view controller with the data to pass
+        cellTappedVC.stock = stocks[tableView.indexPathForSelectedRow!.row]
+    
+    // trying
+//        navVC?.presentationController?.delegate = cellTappedVC as! UIAdaptivePresentationControllerDelegate
+    }
+    
+    @IBAction func unwindToOne(_ sender: UIStoryboardSegue) {}
+    
 }
+
 
 extension MainViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegate

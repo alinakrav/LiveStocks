@@ -13,6 +13,7 @@ class Stock {
     var symbol : String
     var name: String
     var currency: String
+    var shares = 0
     
     init(symbol: String) {
         self.symbol = symbol

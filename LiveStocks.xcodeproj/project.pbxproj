@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C736730324CD7DB800E1BA6D /* AddButtonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C736730224CD7DB800E1BA6D /* AddButtonTableViewController.swift */; };
+		C737BCC724D39D120025A09D /* CellTappedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737BCC624D39D120025A09D /* CellTappedViewController.swift */; };
+		C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */; };
 		C7D2EACD24CC00DB00AAB658 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EACC24CC00DB00AAB658 /* AppDelegate.swift */; };
 		C7D2EACF24CC00DB00AAB658 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EACE24CC00DB00AAB658 /* SceneDelegate.swift */; };
 		C7D2EAD124CC00DB00AAB658 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */; };
@@ -19,7 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C736730224CD7DB800E1BA6D /* AddButtonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonTableViewController.swift; sourceTree = "<group>"; };
+		C737BCC624D39D120025A09D /* CellTappedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellTappedViewController.swift; sourceTree = "<group>"; };
+		C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHoldingViewController.swift; sourceTree = "<group>"; };
 		C7D2EAC924CC00DB00AAB658 /* LiveStocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveStocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7D2EACC24CC00DB00AAB658 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7D2EACE24CC00DB00AAB658 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,7 +67,8 @@
 				C7D2EAE224CCE43100AAB658 /* StockModel.swift */,
 				C7D2EAE324CCE43100AAB658 /* Stock.swift */,
 				C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */,
-				C736730224CD7DB800E1BA6D /* AddButtonTableViewController.swift */,
+				C737BCC624D39D120025A09D /* CellTappedViewController.swift */,
+				C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */,
 				C7D2EAD224CC00DB00AAB658 /* Main.storyboard */,
 				C7D2EAD524CC00DC00AAB658 /* Assets.xcassets */,
 				C7D2EADA24CC00DC00AAB658 /* Info.plist */,
@@ -148,10 +151,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7D2EAD124CC00DB00AAB658 /* MainViewController.swift in Sources */,
-				C736730324CD7DB800E1BA6D /* AddButtonTableViewController.swift in Sources */,
 				C7D2EAE424CCE43100AAB658 /* StockModel.swift in Sources */,
 				C7D2EAE524CCE43100AAB658 /* Stock.swift in Sources */,
+				C737BCC724D39D120025A09D /* CellTappedViewController.swift in Sources */,
 				C7D2EACD24CC00DB00AAB658 /* AppDelegate.swift in Sources */,
+				C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */,
 				C7D2EACF24CC00DB00AAB658 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
