@@ -28,23 +28,23 @@ class MainViewController: UITableViewController {
     func loadStocks() {
         stocks = [
             Stock(symbol:"VET"),
-            Stock(symbol:"OXY"),
+            Stock(symbol:"OXY") /*,
             Stock(symbol:"SPOT"),
             Stock(symbol:"IBM"),
             Stock(symbol:"AAPL"),
             Stock(symbol:"NKLA"),
             Stock(symbol:"TSLA"),
             Stock(symbol:"MGI"),
-            Stock(symbol:"FOX")
+            Stock(symbol:"FOX") */
         ]
     }
     
     func fillStockCell(cell: UITableViewCell, stock: Stock) {
         cell.textLabel!.text = stock.symbol
-//        cell.detailTextLabel!.text = "quote"
-        Stock.getQuote(symbol: stock.symbol) { quote in
-            cell.detailTextLabel!.text = String(format: "%.2f", quote)
-        }
+        cell.detailTextLabel!.text = "quote"
+//        Stock.getQuote(symbol: stock.symbol) { quote in
+//            cell.detailTextLabel!.text = String(format: "%.2f", quote)
+//        }
     }
     
     func testJson(keyword: String, completion: @escaping ([Stock]) -> Void) {
@@ -145,20 +145,30 @@ class MainViewController: UITableViewController {
     
     // Called before cellTapped segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "cellTapped" else {return}
+        guard segue.identifier == "viewHoldings" else {return}
         // get a reference to the second view controller
         let navVC = segue.destination as? UINavigationController
         let stockHoldingsVC = navVC?.topViewController as! StockHoldingsViewController
-
-        // pass cell stock to holdingsVC
-        stockHoldingsVC.stock = stocks[tableView.indexPathForSelectedRow!.row]
-    
-    // delegate for swiping action
-//        navVC?.presentationController?.delegate = cellTappedVC as! UIAdaptivePresentationControllerDelegate
+        
+        // pass cell stock to holdingsVC from current stock array
+        if isFiltering() {
+            // tell VCs to add stock from search when saving the first holding
+            stockHoldingsVC.newStock = true
+            stockHoldingsVC.stock = filteredStocks[tableView.indexPathForSelectedRow!.row]
+        } else {
+            stockHoldingsVC.stock = stocks[tableView.indexPathForSelectedRow!.row]
+        }
+        
+        // delegate for swiping action
+        //        navVC?.presentationController?.delegate = cellTappedVC as! UIAdaptivePresentationControllerDelegate
     }
     
     // Called when other views exit back to main view
-    @IBAction func unwindToOne(_ sender: UIStoryboardSegue) {}
+    @IBAction func unwindToOne(_ sender: UIStoryboardSegue) {
+        // exit search if new holding was saved
+        guard sender.identifier == "saveHolding" else {return}
+        searchController.isActive = false
+    }
     
 }
 

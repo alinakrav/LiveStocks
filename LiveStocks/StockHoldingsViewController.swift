@@ -12,9 +12,11 @@ class StockHoldingsViewController: UITableViewController {
 
     // This variable will hold the data being passed from the First View Controller
     var stock: Stock? = nil
+    var newStock: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = stock?.symbol
     }
 
     // MARK: - Table view data source
@@ -47,9 +49,11 @@ class StockHoldingsViewController: UITableViewController {
         let identifier = segue.identifier
         // limit method to specific segues
         guard identifier == "addHolding" || identifier == "editHolding" else { return }
-        
+
         let addHoldingVC = segue.destination as! AddHoldingViewController
         addHoldingVC.stock = stock
+        // tells AddHoldingVC if stock exists in mainVC table
+        addHoldingVC.newStock = newStock
         if identifier == "editHolding" {
             addHoldingVC.oldHolding = stock?.holdings[tableView.indexPathForSelectedRow!.row]
         }

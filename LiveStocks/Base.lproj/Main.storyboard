@@ -49,7 +49,7 @@
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <segue destination="W3L-hu-pf4" kind="presentation" identifier="cellTapped" id="mD8-Ki-Gpf"/>
+                                    <segue destination="W3L-hu-pf4" kind="presentation" identifier="viewHoldings" id="mD8-Ki-Gpf"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -70,7 +70,7 @@
         <!--Stock Holdings View Controller-->
         <scene sceneID="Bgb-cx-nbb">
             <objects>
-                <tableViewController id="gs7-oN-bUp" customClass="StockHoldingsViewController" customModule="LiveStocks" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController definesPresentationContext="YES" id="gs7-oN-bUp" customClass="StockHoldingsViewController" customModule="LiveStocks" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="AlB-Jd-jx3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -187,7 +187,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="8bx-hS-A2D"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Holding" id="cGd-Y2-aIT">
+                    <navigationItem key="navigationItem" title="Add Holding" largeTitleDisplayMode="never" id="cGd-Y2-aIT">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="c14-wo-cnj">
                             <connections>
                                 <action selector="save:" destination="DLD-Va-jVy" id="LeF-NI-sy1"/>
@@ -228,8 +228,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="W3L-hu-pf4" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Joo-VH-9gY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Joo-VH-9gY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -243,6 +243,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Nao-ts-RHB"/>
+        <segue reference="DUB-Jf-IAq"/>
     </inferredMetricsTieBreakers>
 </document>
