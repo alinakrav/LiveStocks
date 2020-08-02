@@ -41,10 +41,10 @@ class MainViewController: UITableViewController {
     
     func fillStockCell(cell: UITableViewCell, stock: Stock) {
         cell.textLabel!.text = stock.symbol
-        cell.detailTextLabel!.text = "quote"
-//                        Stock.getQuote(symbol: stock.symbol) { quote in
-//                            cell.detailTextLabel!.text = "\(quote)"
-//                        }
+//        cell.detailTextLabel!.text = "quote"
+        Stock.getQuote(symbol: stock.symbol) { quote in
+            cell.detailTextLabel!.text = String(format: "%.2f", quote)
+        }
     }
     
     func testJson(keyword: String, completion: @escaping ([Stock]) -> Void) {

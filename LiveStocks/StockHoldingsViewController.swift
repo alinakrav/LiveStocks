@@ -36,22 +36,25 @@ class StockHoldingsViewController: UITableViewController {
         // if has holdings then
         holding = stock!.holdings[indexPath.row]
         cell.textLabel!.text = "\(holding.shares) shares"
-        cell.detailTextLabel!.text = "@ $\(holding.price)"
+        cell.detailTextLabel!.text = "@ $" + String(format: "%.2f", holding.price)
         return cell
     }
 
 
     // MARK: - Navigation
-
-    // This function is called before the segue
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "addHolding" else {return}
+        let identifier = segue.identifier
+        // limit method to specific segues
+        guard identifier == "addHolding" || identifier == "editHolding" else { return }
+        
         let addHoldingVC = segue.destination as! AddHoldingViewController
-		// pass data
         addHoldingVC.stock = stock
+        if identifier == "editHolding" {
+            addHoldingVC.oldHolding = stock?.holdings[tableView.indexPathForSelectedRow!.row]
+        }
     }
-
-
+    
 }
 
 /*

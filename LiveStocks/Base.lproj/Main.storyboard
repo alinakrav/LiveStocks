@@ -99,6 +99,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="FPp-Gu-ZTG" kind="show" identifier="editHolding" id="Nao-ts-RHB"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -239,4 +242,7 @@
             <point key="canvasLocation" x="1721.7391304347827" y="-68.303571428571431"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Nao-ts-RHB"/>
+    </inferredMetricsTieBreakers>
 </document>
