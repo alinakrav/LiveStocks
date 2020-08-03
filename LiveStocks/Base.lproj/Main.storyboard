@@ -14,10 +14,10 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7wJ-TR-cv4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <label key="tableFooterView" hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Workaround to hide search" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QRn-j1-0IX" userLabel="Search-hidden workaround">
-                            <rect key="frame" x="0.0" y="99.5" width="414" height="671"/>
+                            <rect key="frame" x="0.0" y="99.5" width="414" height="100"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.48661554940000001" green="0.75022290329999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <accessibility key="accessibilityConfiguration" identifier="BlankSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
@@ -48,9 +48,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <connections>
-                                    <segue destination="W3L-hu-pf4" kind="presentation" identifier="viewHoldings" id="mD8-Ki-Gpf"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -61,6 +58,8 @@
                     <navigationItem key="navigationItem" title="Stocks" id="Ne6-Zm-FMj"/>
                     <connections>
                         <outlet property="blankSpace" destination="QRn-j1-0IX" id="eX9-lr-uUk"/>
+                        <segue destination="W3L-hu-pf4" kind="presentation" identifier="viewHoldings" id="TLk-eB-5gO"/>
+                        <segue destination="vVs-BY-58U" kind="presentation" identifier="addHoldingFromSearch" id="JCG-R0-PT0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hBS-XT-LQm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -100,7 +99,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="FPp-Gu-ZTG" kind="show" identifier="editHolding" id="Nao-ts-RHB"/>
+                                    <segue destination="FPp-Gu-ZTG" kind="show" identifier="editHolding" id="m7q-27-GEd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -117,7 +116,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Yn9-k6-95S">
                             <connections>
-                                <segue destination="FPp-Gu-ZTG" kind="show" identifier="addHolding" id="DUB-Jf-IAq"/>
+                                <segue destination="FPp-Gu-ZTG" kind="show" identifier="addHolding" id="u8b-5H-fYc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -125,7 +124,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OBf-EU-eP5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="oeI-8a-Pe8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2631.8840579710145" y="-68.303571428571431"/>
+            <point key="canvasLocation" x="2613" y="-406"/>
         </scene>
         <!--Add Holding-->
         <scene sceneID="TUH-0c-wMi">
@@ -203,7 +202,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSo-vY-5ao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="DLD-Va-jVy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3437.68115942029" y="-68.303571428571431"/>
+            <point key="canvasLocation" x="3606" y="-137"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="N6g-Iv-yom">
@@ -221,7 +220,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ao8-mi-VLO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="164" y="-68"/>
+            <point key="canvasLocation" x="220" y="-68"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IEJ-0a-q3n">
@@ -239,10 +238,29 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6C9-lX-5Yn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1721.7391304347827" y="-68.303571428571431"/>
+            <point key="canvasLocation" x="1839" y="-406"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Qow-wM-B9O">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vVs-BY-58U" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="daF-IM-GLv"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bAR-Bg-g3E">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FPp-Gu-ZTG" kind="relationship" relationship="rootViewController" id="x3f-hE-qJw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iIY-1f-4Mn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1838" y="267"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="DUB-Jf-IAq"/>
+        <segue reference="m7q-27-GEd"/>
     </inferredMetricsTieBreakers>
 </document>

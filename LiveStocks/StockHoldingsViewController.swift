@@ -60,10 +60,3 @@ class StockHoldingsViewController: UITableViewController {
     }
     
 }
-
-/*
-extension StockHoldingsViewController: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        print("slide to dismiss stopped")
-    }
-} */
