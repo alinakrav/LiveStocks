@@ -85,10 +85,24 @@ class MainViewController: UITableViewController {
     
     func fillStockCell(cell: UITableViewCell, stock: Stock) {
         cell.textLabel!.text = stock.symbol
-        cell.detailTextLabel!.text = "quote"
-        //        Stock.getQuote(symbol: stock.symbol) { quote in
-        //            cell.detailTextLabel!.text = String(format: "%.2f", quote)
-        //        }
+
+        Stock.getQuote(symbol: stock.symbol) { quote in
+            // just show quote if no holdings
+            if stock.holdings.count == 0 {
+                cell.detailTextLabel!.backgroundColor = nil
+//                cell.detailTextLabel!.text = "quote"
+                cell.detailTextLabel!.text = String(format: "%.2f", quote)
+            // show gains if holdings exist
+            } else {
+                var gains: Float = 0
+                for holding in stock.holdings {
+                    let shares = Float(holding.shares)
+                    gains += quote*shares - holding.price*shares - holding.commission
+                }
+                cell.detailTextLabel!.text = String(format: "%.2f", gains)
+                if gains > 0 { cell.detailTextLabel?.backgroundColor = .green } else { cell.detailTextLabel?.backgroundColor = .red }
+            }
+        }
     }
     
     // MARK: - Search
@@ -185,7 +199,7 @@ class MainViewController: UITableViewController {
         bottomLine.backgroundColor = tableView.separatorColor
         view.addSubview(bottomLine)
         
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = .clear
         return view
     }
     
