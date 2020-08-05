@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C737BCC724D39D120025A09D /* StockHoldingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */; };
+		C77E977824D8C24F000C6EC6 /* StockTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77E977724D8C24F000C6EC6 /* StockTableViewCell.swift */; };
 		C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */; };
 		C7AED75324D5EF4A00BBEA2F /* Holding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AED75224D5EF4A00BBEA2F /* Holding.swift */; };
 		C7D2EACD24CC00DB00AAB658 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EACC24CC00DB00AAB658 /* AppDelegate.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHoldingsViewController.swift; sourceTree = "<group>"; };
+		C77E977724D8C24F000C6EC6 /* StockTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTableViewCell.swift; sourceTree = "<group>"; };
 		C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHoldingViewController.swift; sourceTree = "<group>"; };
 		C7AED75224D5EF4A00BBEA2F /* Holding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Holding.swift; sourceTree = "<group>"; };
 		C7D2EAC924CC00DB00AAB658 /* LiveStocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveStocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +80,7 @@
 				C7D2EACC24CC00DB00AAB658 /* AppDelegate.swift */,
 				C7D2EACE24CC00DB00AAB658 /* SceneDelegate.swift */,
 				C7EC99A424D7C0700047914D /* LaunchScreen.storyboard */,
+				C77E977724D8C24F000C6EC6 /* StockTableViewCell.swift */,
 			);
 			path = LiveStocks;
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 				C7D2EAE424CCE43100AAB658 /* StockModel.swift in Sources */,
 				C7D2EAE524CCE43100AAB658 /* Stock.swift in Sources */,
 				C737BCC724D39D120025A09D /* StockHoldingsViewController.swift in Sources */,
+				C77E977824D8C24F000C6EC6 /* StockTableViewCell.swift in Sources */,
 				C7D2EACD24CC00DB00AAB658 /* AppDelegate.swift in Sources */,
 				C7AED75324D5EF4A00BBEA2F /* Holding.swift in Sources */,
 				C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */,

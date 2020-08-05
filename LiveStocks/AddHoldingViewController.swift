@@ -21,12 +21,9 @@ class AddHoldingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if newStock {
-            //         addBackButton()
-            let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(goBack))
-            navigationItem.leftBarButtonItem = backButton
+        if stock?.holdings.count == 0 {
+             addBackButton()
         }
-        
         
         // if holding is being edited, input existing data
         if oldHolding != nil {
@@ -36,21 +33,39 @@ class AddHoldingViewController: UIViewController {
     }
     
     func addBackButton() {
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UINavigationBar.appearance().backIndicatorImage, for: .normal)
-        print(UINavigationBar.appearance())
-        backButton.imageView?.contentMode = .scaleAspectFit
-        backButton.setTitle("Back", for: .normal)
-        backButton.setTitleColor(backButton.tintColor, for: .normal)
-        backButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        // position of btn view on navbar
+        let btnView = UIView(frame: CGRect(x:0, y:6, width: 58.5, height: 44))
+        // position of label in btn view
+        let label = UILabel(frame: CGRect(x: 24.5, y: 13, width: 0, height: 0))
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.textAlignment = .left
+        label.textColor = .systemBlue
+        label.text = "VET"
+        label.sizeToFit()
+        btnView.addSubview(label)
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-    }
-    @objc
-    func goBack(){
-        dismiss(animated: true, completion: nil)
+        let icon = UIImage(systemName: "chevron.left", withConfiguration: UIImage.SymbolConfiguration(pointSize: 23, weight: .medium))
+        // convert UIImage to UIView
+        let iconView = UIImageView(image: icon)
+        // position of icon in btn view
+        iconView.frame.origin.x = 5.5
+        iconView.frame.origin.y = 12
+        btnView.addSubview(iconView)
+        
+        // add button over view to perform action
+        let clickableBtn = UIButton(type: .custom)
+        clickableBtn.frame = CGRect(x:0, y:0, width: 58.5, height: 44)
+        clickableBtn.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        btnView.addSubview(clickableBtn)
+
+        // add btnView to navbar as subview
+        navigationController?.navigationBar.addSubview(btnView)
     }
     
+    @objc
+    func goBack() {
+        dismiss(animated: true, completion: nil)
+    }
     
     // MARK: - Navigation
     

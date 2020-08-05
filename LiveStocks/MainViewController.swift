@@ -13,7 +13,7 @@ class MainViewController: UITableViewController {
     var myStocks = [Stock]()
     var myStocksSymbols = [String]()
     // 2D array to hold stocks on main view and search view
-    var stockSections = [[Stock]]()
+    var allStocks = [[Stock]]()
     let searchController = UISearchController(searchResultsController: nil)
     var searchTask: DispatchWorkItem?
     // space under main stock table to force searchbar to hide
@@ -24,18 +24,18 @@ class MainViewController: UITableViewController {
         
         setupSearchController()
         loadStocks()
-        addSpaceToHideSearch()
+//        addSpaceToHideSearch()
     }
 
     // MARK: - Setup
     
     func loadStocks() {
-        addStock(stock: Stock(symbol: "VET"))
-        addStock(stock: Stock(symbol: "OXY"))
+        addStock(stock: Stock(symbol: "VET", name:"Vermillion Energy", currency:""))
+        addStock(stock: Stock(symbol: "OXY", name:"Oxydental Oil", currency:""))
 
         // initialize stock array sections
-        stockSections.append(myStocks)
-        stockSections.append([Stock]())
+        allStocks.append(myStocks)
+        allStocks.append([Stock]())
     }
     
     // temp func to update myStocks - should be done in StockModel
@@ -50,7 +50,7 @@ class MainViewController: UITableViewController {
         let navHeight = (navigationController?.navigationBar.frame.size.height ?? 0) + (navigationController?.navigationBar.frame.origin.y ?? 0)
         let searchHeight = searchController.searchBar.frame.height
         // adjust for initial number of rows
-        let cellHeight = CGFloat(44*myStocks.count)
+        let cellHeight = CGFloat(56*myStocks.count)
 
         let height = tableFrame - navHeight - searchHeight - cellHeight + 5
         if height < 0 {
@@ -64,43 +64,46 @@ class MainViewController: UITableViewController {
     
     // return number of sections
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return stockSections.count
+        return allStocks.count
     }
     
     // return rows in section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stockSections[section].count
+        return allStocks[section].count
     }
     
     // fill cells with data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "StockCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StockCell", for: indexPath) as! StockTableViewCell
         // specify stock object to get data from
         let stock: Stock
-        stock = stockSections[indexPath.section][indexPath.row]
+        stock = allStocks[indexPath.section][indexPath.row]
         // fill cell with stock data
         fillStockCell(cell: cell, stock: stock)
         return cell
     }
     
-    func fillStockCell(cell: UITableViewCell, stock: Stock) {
-        cell.textLabel!.text = stock.symbol
-
+    func fillStockCell(cell: StockTableViewCell, stock: Stock) {
+        cell.symbol.text = stock.symbol
+        cell.name.text = stock.name
         Stock.getQuote(symbol: stock.symbol) { quote in
             // just show quote if no holdings
             if stock.holdings.count == 0 {
-                cell.detailTextLabel!.backgroundColor = nil
-//                cell.detailTextLabel!.text = "quote"
-                cell.detailTextLabel!.text = String(format: "%.2f", quote)
-            // show gains if holdings exist
+                cell.amount.backgroundColor = nil
+                cell.amount.text = "quote"
+//                cell.amount.text = String(format: "%.2f", quote)
+                
+            // show if holdings exist
             } else {
                 var gains: Float = 0
+                // calculate gains
                 for holding in stock.holdings {
                     let shares = Float(holding.shares)
                     gains += quote*shares - holding.price*shares - holding.commission
                 }
-                cell.detailTextLabel!.text = String(format: "%.2f", gains)
-                if gains > 0 { cell.detailTextLabel?.backgroundColor = .green } else { cell.detailTextLabel?.backgroundColor = .red }
+                // change amount colour
+                if gains > 0 { cell.amount.backgroundColor = .green } else { cell.amount.backgroundColor = .red }
+                cell.amount.text = String(format: "%.2f", gains)
             }
         }
     }
@@ -118,12 +121,12 @@ class MainViewController: UITableViewController {
     func updateTableWithSearchResults(_ searchText: String) {
         // when no text is entered, show only my stocks
         if searchBarIsEmpty() {
-            stockSections[0] = myStocks
-            stockSections[1] = [Stock]()
+            allStocks[0] = myStocks
+            allStocks[1] = [Stock]()
             tableView.reloadData()
         } else {
             // show my stocks in search
-            stockSections[0] = myStocks.filter({( stock : Stock) -> Bool in
+            allStocks[0] = myStocks.filter({( stock : Stock) -> Bool in
                 let containsSymbol = stock.symbol.lowercased().contains(searchText.lowercased())
                 let containsName = stock.name.lowercased().contains(searchText.lowercased())
                 return containsSymbol || containsName
@@ -131,7 +134,7 @@ class MainViewController: UITableViewController {
             // show new stocks in search
             findStocks(keyword: searchText) { stocksFound in
                 // filter out myStocks from stocksFound
-                self.stockSections[1] = stocksFound.filter({( stock : Stock) -> Bool in
+                self.allStocks[1] = stocksFound.filter({( stock : Stock) -> Bool in
                     return !self.myStocksSymbols.contains(stock.symbol)
                 })
                 self.tableView.reloadData()
@@ -171,7 +174,7 @@ class MainViewController: UITableViewController {
     // section header image
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // make header for searched stocks, when section exists
-        guard searchController.isActive && stockSections[section].count != 0 else {return nil}
+        guard searchController.isActive && allStocks[section].count != 0 else {return nil}
         
         // draw header title
         let view = UIView(frame: CGRect(x:0, y:0, width: tableView.frame.size.width, height: 0))
@@ -188,7 +191,7 @@ class MainViewController: UITableViewController {
         view.addSubview(label)
         
         // draw separator at top of Symbols header for Watchlist's last cell
-        if section == 1 && stockSections[0].count != 0 {
+        if section == 1 && allStocks[0].count != 0 {
             let topLine = UIView(frame: CGRect(x: tableView.separatorInset.left, y: 0, width: tableView.frame.size.width, height: 0.5))
             topLine.backgroundColor = tableView.separatorColor
             view.addSubview(topLine)
@@ -206,7 +209,7 @@ class MainViewController: UITableViewController {
     // section header height
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // only make header for searched stocks, when section exists
-        guard searchController.isActive && stockSections[section].count != 0 else {return 0}
+        guard searchController.isActive && allStocks[section].count != 0 else {return 0}
         return sectionHeaderHeight
     }
     
@@ -215,30 +218,28 @@ class MainViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            performSegue(withIdentifier: "viewHoldings", sender: self)
-        } else {
+        if allStocks[indexPath.section][indexPath.row].holdings.count == 0 {
             performSegue(withIdentifier: "addHoldingFromSearch", sender: self)
+        } else {
+            performSegue(withIdentifier: "viewHoldings", sender: self)
         }
     }
     
     // Called before cellTapped segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let identifier = segue.identifier
-        guard identifier == "viewHoldings" || identifier == "addHoldingFromSearch" else {return}
         let indexPath = tableView.indexPathForSelectedRow
-		let stock = stockSections[indexPath!.section][indexPath!.row]
+		let stock = allStocks[indexPath!.section][indexPath!.row]
         let navVC = (segue.destination as? UINavigationController)?.topViewController
         switch identifier {
         case "viewHoldings":
-            // get a reference to the second view controller
-            let viewHoldingsVC = navVC as! StockHoldingsViewController
-            // pass tapped stock to next view
-            viewHoldingsVC.stock = stock
+            (navVC as! StockHoldingsViewController).stock = stock
         case "addHoldingFromSearch":
-            let addHoldingVC = navVC as! AddHoldingViewController
-            addHoldingVC.stock = stock
-            addHoldingVC.newStock = true
+            let nextVC = navVC as! AddHoldingViewController
+        	nextVC.stock = stock
+            if indexPath?.section == 1 {
+                nextVC.newStock = true
+            }
         default:
             return
         }
@@ -249,7 +250,7 @@ class MainViewController: UITableViewController {
         // exit search if new holding was saved
         guard sender.identifier == "saveHolding" else {return}
         searchController.isActive = false
-		addSpaceToHideSearch()
+//		addSpaceToHideSearch()
     }
 }
 
