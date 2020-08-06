@@ -34,7 +34,7 @@ class Stock {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data, error == nil {
                 do {
-                    guard let quote = try Float(String(data: data, encoding: .utf8)!) else { return }
+                    guard let quote = Float(String(data: data, encoding: .utf8)!) else { return }
                     DispatchQueue.main.async {
                         completion(quote)
                     }

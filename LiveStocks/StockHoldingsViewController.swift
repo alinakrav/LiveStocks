@@ -30,12 +30,10 @@ class StockHoldingsViewController: UITableViewController {
         return stock!.holdings.count
     }
 
-    
+    // show holding data in cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "holdingCell", for: indexPath)
         let holding : Holding
-        //if no holdings then...
-        // if has holdings then
         holding = stock!.holdings[indexPath.row]
         cell.textLabel!.text = "\(holding.shares) shares"
         cell.detailTextLabel!.text = "@ $" + String(format: "%.2f", holding.price)

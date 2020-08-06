@@ -14,6 +14,8 @@ class AddHoldingViewController: UIViewController {
     var newStock: Bool = false
     var oldHolding: Holding? = nil
     var sharesData: Int = -1, priceData: Float = -1.0
+    var btnView = UIView()
+    var btnLabel = UILabel()
     
     @IBOutlet weak var shares: UITextField!
     @IBOutlet weak var price: UITextField!
@@ -21,8 +23,9 @@ class AddHoldingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // if no previous modal, replicate the back button
         if stock?.holdings.count == 0 {
-             addBackButton()
+            addBackButton(string: stock!.symbol)
         }
         
         // if holding is being edited, input existing data
@@ -32,15 +35,15 @@ class AddHoldingViewController: UIViewController {
         }
     }
     
-    func addBackButton() {
+    func addBackButton(string: String) {
         // position of btn view on navbar
         let btnView = UIView(frame: CGRect(x:0, y:6, width: 58.5, height: 44))
         // position of label in btn view
-        let label = UILabel(frame: CGRect(x: 24.5, y: 13, width: 0, height: 0))
+        let label = UILabel(frame: CGRect(x: 24.5, y: 13, width: 200, height: 0))
         label.font = UIFont.systemFont(ofSize: 17)
         label.textAlignment = .left
         label.textColor = .systemBlue
-        label.text = "VET"
+        label.text = string
         label.sizeToFit()
         btnView.addSubview(label)
         
@@ -61,11 +64,8 @@ class AddHoldingViewController: UIViewController {
         // add btnView to navbar as subview
         navigationController?.navigationBar.addSubview(btnView)
     }
-    
-    @objc
-    func goBack() {
-        dismiss(animated: true, completion: nil)
-    }
+
+    @objc func goBack() { dismiss(animated: true, completion: nil) }
     
     // MARK: - Navigation
     

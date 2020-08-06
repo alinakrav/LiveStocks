@@ -49,8 +49,14 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6W-eh-iWI">
-                                            <rect key="frame" x="315" y="18" width="60" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unavailable" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6W-eh-iWI">
+                                            <rect key="frame" x="287" y="18" width="88" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWK-pP-pTV" userLabel="SideQuote">
+                                            <rect key="frame" x="282" y="18" width="0.0" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -59,18 +65,22 @@
                                     <constraints>
                                         <constraint firstItem="3iy-NY-CJv" firstAttribute="top" secondItem="2Sx-VJ-dA3" secondAttribute="bottom" constant="0.5" id="0Dw-Fz-Uxb"/>
                                         <constraint firstItem="2Sx-VJ-dA3" firstAttribute="leading" secondItem="EeY-ql-AkY" secondAttribute="leading" constant="20" id="CdP-qN-wnt"/>
+                                        <constraint firstItem="TWK-pP-pTV" firstAttribute="top" secondItem="EeY-ql-AkY" secondAttribute="topMargin" constant="7" id="IW2-Pj-A3F"/>
                                         <constraint firstItem="o6W-eh-iWI" firstAttribute="trailing" secondItem="EeY-ql-AkY" secondAttribute="trailingMargin" id="KaU-bf-Wc1"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="TWK-pP-pTV" secondAttribute="bottom" constant="6" id="KgK-BG-qs1"/>
                                         <constraint firstItem="3iy-NY-CJv" firstAttribute="leading" secondItem="EeY-ql-AkY" secondAttribute="leading" constant="20" id="Ne5-fF-Ef1"/>
                                         <constraint firstAttribute="bottom" secondItem="3iy-NY-CJv" secondAttribute="bottom" constant="9.5" id="PvK-6X-Pdg"/>
                                         <constraint firstItem="o6W-eh-iWI" firstAttribute="top" secondItem="EeY-ql-AkY" secondAttribute="topMargin" constant="7" id="TzE-9d-Rf6"/>
                                         <constraint firstItem="2Sx-VJ-dA3" firstAttribute="top" secondItem="EeY-ql-AkY" secondAttribute="top" constant="10" id="eDr-Ym-SrV"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="o6W-eh-iWI" secondAttribute="bottom" constant="6" id="inY-6m-DyO"/>
+                                        <constraint firstItem="o6W-eh-iWI" firstAttribute="leading" secondItem="TWK-pP-pTV" secondAttribute="trailing" constant="5" id="weV-nw-chl"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="amount" destination="o6W-eh-iWI" id="way-32-vec"/>
                                     <outlet property="name" destination="3iy-NY-CJv" id="Yga-Ik-8is"/>
+                                    <outlet property="sideQuote" destination="TWK-pP-pTV" id="hCU-C1-hJO"/>
                                     <outlet property="symbol" destination="2Sx-VJ-dA3" id="Zqi-f4-uEa"/>
                                 </connections>
                             </tableViewCell>

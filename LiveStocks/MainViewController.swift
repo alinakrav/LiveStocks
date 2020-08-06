@@ -18,13 +18,13 @@ class MainViewController: UITableViewController {
     var searchTask: DispatchWorkItem?
     // space under main stock table to force searchbar to hide
     @IBOutlet weak var blankSpace: UILabel!
+    var searchOverlay = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupSearchController()
         loadStocks()
-//        addSpaceToHideSearch()
     }
 
     // MARK: - Setup
@@ -72,7 +72,7 @@ class MainViewController: UITableViewController {
         return allStocks[section].count
     }
     
-    // fill cells with data
+    // fill table with cells
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StockCell", for: indexPath) as! StockTableViewCell
         // specify stock object to get data from
@@ -83,6 +83,7 @@ class MainViewController: UITableViewController {
         return cell
     }
     
+    // fill cell with data
     func fillStockCell(cell: StockTableViewCell, stock: Stock) {
         cell.symbol.text = stock.symbol
         cell.name.text = stock.name
@@ -93,7 +94,7 @@ class MainViewController: UITableViewController {
                 cell.amount.text = "quote"
 //                cell.amount.text = String(format: "%.2f", quote)
                 
-            // show if holdings exist
+            // show gains if holdings exist
             } else {
                 var gains: Float = 0
                 // calculate gains
@@ -104,6 +105,8 @@ class MainViewController: UITableViewController {
                 // change amount colour
                 if gains > 0 { cell.amount.backgroundColor = .green } else { cell.amount.backgroundColor = .red }
                 cell.amount.text = String(format: "%.2f", gains)
+                // show quote next to gains
+                cell.sideQuote.text = String(format: "%.2f", quote)
             }
         }
     }
@@ -115,12 +118,36 @@ class MainViewController: UITableViewController {
         definesPresentationContext = false
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
+        // draw search overlay image
+        searchOverlay.frame = view.frame
+        searchOverlay.backgroundColor = .black
+        tableView.addSubview(searchOverlay)
+        searchOverlay.alpha = 0
+        // cancel search when overlay is tapped
+        let tap = UITapGestureRecognizer(target: self, action: #selector(cancelSearch))
+        searchOverlay.addGestureRecognizer(tap)
+    }
+    @objc func cancelSearch() { searchController.isActive = false }
+    
+    // fades in and out of tableview overlay
+    func fadeOverlay(hidden: Bool) {
+        let alpha: CGFloat = hidden ? 0 : 0.5
+        UIView.animate(withDuration: 0.2, delay: 0, options: .transitionCrossDissolve, animations: {
+            self.searchOverlay.alpha = alpha
+        })
+        tableView.bringSubviewToFront(searchOverlay)
     }
     
     // update table with new stocks during search
     func updateTableWithSearchResults(_ searchText: String) {
         // when no text is entered, show only my stocks
         if searchBarIsEmpty() {
+            // overlay screen when searchbar empty
+            if !searchController.isActive {
+                fadeOverlay(hidden: true)
+            } else {
+                fadeOverlay(hidden: false)
+            }
             allStocks[0] = myStocks
             allStocks[1] = [Stock]()
             tableView.reloadData()
@@ -135,8 +162,10 @@ class MainViewController: UITableViewController {
             findStocks(keyword: searchText) { stocksFound in
                 // filter out myStocks from stocksFound
                 self.allStocks[1] = stocksFound.filter({( stock : Stock) -> Bool in
+                    // remove my stocks from new stocks, remove quoteless stocks
                     return !self.myStocksSymbols.contains(stock.symbol)
                 })
+                self.fadeOverlay(hidden: true)
                 self.tableView.reloadData()
             }
         }
@@ -174,7 +203,7 @@ class MainViewController: UITableViewController {
     // section header image
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // make header for searched stocks, when section exists
-        guard searchController.isActive && allStocks[section].count != 0 else {return nil}
+        guard !searchBarIsEmpty() && allStocks[section].count != 0 else {return nil}
         
         // draw header title
         let view = UIView(frame: CGRect(x:0, y:0, width: tableView.frame.size.width, height: 0))
@@ -209,7 +238,7 @@ class MainViewController: UITableViewController {
     // section header height
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // only make header for searched stocks, when section exists
-        guard searchController.isActive && allStocks[section].count != 0 else {return 0}
+        guard !searchBarIsEmpty() && allStocks[section].count != 0 else {return 0}
         return sectionHeaderHeight
     }
     

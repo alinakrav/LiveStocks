@@ -12,4 +12,5 @@ class StockTableViewCell: UITableViewCell {
     @IBOutlet weak var symbol: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var amount: UILabel!
+    @IBOutlet weak var sideQuote: UILabel!
 }
