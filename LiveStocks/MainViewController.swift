@@ -9,13 +9,19 @@
 import UIKit
 
 class MainViewController: UITableViewController {
+    // NSDefaults to store data
+    let defaults = UserDefaults.standard
+
+    // STOCK DATA ARRAYS
     // array for stocks saved to main table view
     var myStocks = [Stock]()
     var myStocksSymbols = [String]()
     // 2D array to hold stocks on main view and search view
     var allStocks = [[Stock]]()
+    
     let searchController = UISearchController(searchResultsController: nil)
     var searchTask: DispatchWorkItem?
+    let numFormatter = NumberFormatter()
     // space under main stock table to force searchbar to hide
     @IBOutlet weak var blankSpace: UILabel!
     var searchOverlay = UIView()
@@ -23,22 +29,68 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        makeFormatter()
         setupSearchController()
         loadStocks()
     }
-
+    
+    // called at launch and after search, updates navbar total
+    override func viewDidAppear(_ animated: Bool) {
+        loadNavBar()
+    }
+    
     // MARK: - Setup
     
+    // formatter adds delimiters (commas) and limits decimal places
+    func makeFormatter() {
+        numFormatter.numberStyle = .decimal
+        numFormatter.maximumFractionDigits = 2
+        numFormatter.minimumFractionDigits = 2
+    }
+    
+    // load stock array from NSDefaults
     func loadStocks() {
-        addStock(stock: Stock(symbol: "VET", name:"Vermillion Energy", currency:""))
-        addStock(stock: Stock(symbol: "OXY", name:"Oxydental Oil", currency:""))
-
-        // initialize stock array sections
+        do {
+            myStocks = try defaults.getObject(forKey: "myStocks", castTo: [Stock].self)
+            myStocksSymbols = defaults.stringArray(forKey: "myStocksSymbols") ?? [String]()
+        } catch {
+            print(error.localizedDescription)
+        }
         allStocks.append(myStocks)
         allStocks.append([Stock]())
     }
     
-    // temp func to update myStocks - should be done in StockModel
+    // call updateTotalGains method after a 1 sec delay
+    func loadNavBar() {
+        let task = DispatchWorkItem { [weak self] in
+            self?.updateTotalGains()
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: task)
+    }
+    
+    // calculate and display total holdings gain in navbar
+    func updateTotalGains() {
+        var totalGains: Float = 0
+        for stock in myStocks {
+            var stockGains: Float = 0
+            for holding in stock.holdings {
+                stockGains += holding.gains
+            }
+            totalGains += stockGains
+        }
+        // format string
+        navigationItem.title = (totalGains == 0 ? "" : (totalGains > 0 ? "+" : "-")) + " $" + numFormatter.string(from: NSNumber(value: abs(totalGains)))!
+        // change text color based on amount
+        let textAttributes: [NSAttributedString.Key : Any]
+        if totalGains < 0 {
+            textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red: 0.84, green: 0.26, blue: 0.27, alpha: 1)]
+        } else {
+            textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red: 0.23, green: 0.79, blue: 0.44, alpha: 1)]
+        }
+        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
+    }
+    
+    // add new Stock object to myStocks (made to update array from AddHoldingVC)
     func addStock(stock: Stock) {
         myStocks.append(stock)
         myStocksSymbols.append(stock.symbol)
@@ -88,26 +140,33 @@ class MainViewController: UITableViewController {
         cell.symbol.text = stock.symbol
         cell.name.text = stock.name
         Stock.getQuote(symbol: stock.symbol) { quote in
+            // vars to hold nums for the 2 labels
+            var amount: Float
+            var sideQuote: Float? = nil
+            
             // just show quote if no holdings
             if stock.holdings.count == 0 {
-                cell.amount.backgroundColor = nil
-                cell.amount.text = "quote"
-//                cell.amount.text = String(format: "%.2f", quote)
+                cell.amount.colorCode(n: nil)
+                amount = quote
+    			// sideQuote stays nil
                 
-            // show gains if holdings exist
+            // calculate gains if holdings exist
             } else {
                 var gains: Float = 0
                 // calculate gains
                 for holding in stock.holdings {
                     let shares = Float(holding.shares)
-                    gains += quote*shares - holding.price*shares - holding.commission
+                    holding.gains = quote*shares - holding.price*shares - holding.commission
+                    gains += holding.gains
                 }
                 // change amount colour
-                if gains > 0 { cell.amount.backgroundColor = .green } else { cell.amount.backgroundColor = .red }
-                cell.amount.text = String(format: "%.2f", gains)
-                // show quote next to gains
-                cell.sideQuote.text = String(format: "%.2f", quote)
+                cell.amount.colorCode(n: gains)
+                amount = gains
+                sideQuote = quote
             }
+			// format and display gains and/or quote - detect gains label by checking if sideQuote exists
+            cell.amount.format(n: amount, sign: sideQuote != nil, formatter: self.numFormatter)
+            cell.sideQuote.format(n: sideQuote, sign: false, formatter: self.numFormatter)
         }
     }
     
@@ -118,6 +177,8 @@ class MainViewController: UITableViewController {
         definesPresentationContext = false
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
+        // show searchbar on launch
+        tableView.setContentOffset(CGPoint(x: 0, y: -(searchController.searchBar.frame.height)), animated: false)
         // draw search overlay image
         searchOverlay.frame = view.frame
         searchOverlay.backgroundColor = .black
@@ -159,7 +220,7 @@ class MainViewController: UITableViewController {
                 return containsSymbol || containsName
             })
             // show new stocks in search
-            findStocks(keyword: searchText) { stocksFound in
+            Stock.findStocks(keyword: searchText) { stocksFound in
                 // filter out myStocks from stocksFound
                 self.allStocks[1] = stocksFound.filter({( stock : Stock) -> Bool in
                     // remove my stocks from new stocks, remove quoteless stocks
@@ -169,27 +230,6 @@ class MainViewController: UITableViewController {
                 self.tableView.reloadData()
             }
         }
-    }
-    
-    func findStocks(keyword: String, completion: @escaping ([Stock]) -> Void) {
-        let keyword = String(keyword.map { $0 == " " ? "+" : $0 })
-        let url = URL(string: "https://api.tiingo.com/tiingo/utilities/search?query=\(keyword)&token=728db149992e36b1d617774af5921ae43cf53fcc")!
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let data = data {
-                do {
-                    guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [[String: Any]] else { return }
-                    // parse json data into array of stocks found
-                    var stocksFound = [Stock]()
-                    for stockData in json {
-                        let stock = Stock(symbol: stockData["ticker"] as? String ?? "", name: stockData["name"] as? String ?? "", currency: stockData["countryCode"] as? String ?? "")
-                        stocksFound.append(stock)
-                    }
-                    DispatchQueue.main.async {
-                        completion(stocksFound)
-                    }
-                } catch { print("Error retrieving data from Tiingo...")}
-            }
-        }.resume()
     }
     
     func searchBarIsEmpty() -> Bool {
@@ -207,29 +247,17 @@ class MainViewController: UITableViewController {
         
         // draw header title
         let view = UIView(frame: CGRect(x:0, y:0, width: tableView.frame.size.width, height: 0))
-        let label = UILabel(frame: CGRect(x: tableView.separatorInset.left, y: 6, width: tableView.frame.size.width, height: sectionHeaderHeight))
-        label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+        let label = UILabel(frame: CGRect(x: tableView.separatorInset.left, y: 0, width: tableView.frame.size.width, height: sectionHeaderHeight))
+        label.font = .systemFont(ofSize: 32, weight: .bold)
         switch section {
         case 0:
             label.text = "Watchlist"
         case 1:
             label.text = "Symbols"
         default:
-            label.text = "Stocks"
+            label.text = ""
         }
         view.addSubview(label)
-        
-        // draw separator at top of Symbols header for Watchlist's last cell
-        if section == 1 && allStocks[0].count != 0 {
-            let topLine = UIView(frame: CGRect(x: tableView.separatorInset.left, y: 0, width: tableView.frame.size.width, height: 0.5))
-            topLine.backgroundColor = tableView.separatorColor
-            view.addSubview(topLine)
-        }
-        
-        // draw separator for bottom of section header
-        let bottomLine = UIView(frame: CGRect(x: 0, y: sectionHeaderHeight, width: tableView.frame.size.width, height: 0.5))
-        bottomLine.backgroundColor = tableView.separatorColor
-        view.addSubview(bottomLine)
         
         view.backgroundColor = .clear
         return view
@@ -252,6 +280,7 @@ class MainViewController: UITableViewController {
         } else {
             performSegue(withIdentifier: "viewHoldings", sender: self)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // Called before cellTapped segue
@@ -262,7 +291,7 @@ class MainViewController: UITableViewController {
         let navVC = (segue.destination as? UINavigationController)?.topViewController
         switch identifier {
         case "viewHoldings":
-            (navVC as! StockHoldingsViewController).stock = stock
+            (navVC as! HoldingsViewController).stock = stock
         case "addHoldingFromSearch":
             let nextVC = navVC as! AddHoldingViewController
         	nextVC.stock = stock
@@ -279,7 +308,17 @@ class MainViewController: UITableViewController {
         // exit search if new holding was saved
         guard sender.identifier == "saveHolding" else {return}
         searchController.isActive = false
-//		addSpaceToHideSearch()
+    
+        // called after saving holding, updates navbar total
+        loadNavBar()
+
+        // store data once when holding is saved
+        do {
+            try defaults.setObject(myStocks, forKey: "myStocks")
+            defaults.set(myStocksSymbols, forKey: "myStocksSymbols")
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 

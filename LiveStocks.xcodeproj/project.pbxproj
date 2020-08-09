@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C737BCC724D39D120025A09D /* StockHoldingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */; };
+		C737BCC724D39D120025A09D /* HoldingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737BCC624D39D120025A09D /* HoldingsViewController.swift */; };
 		C77E977824D8C24F000C6EC6 /* StockTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77E977724D8C24F000C6EC6 /* StockTableViewCell.swift */; };
 		C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */; };
 		C7AED75324D5EF4A00BBEA2F /* Holding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AED75224D5EF4A00BBEA2F /* Holding.swift */; };
@@ -16,13 +16,15 @@
 		C7D2EAD124CC00DB00AAB658 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */; };
 		C7D2EAD424CC00DB00AAB658 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7D2EAD224CC00DB00AAB658 /* Main.storyboard */; };
 		C7D2EAD624CC00DC00AAB658 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7D2EAD524CC00DC00AAB658 /* Assets.xcassets */; };
-		C7D2EAE424CCE43100AAB658 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EAE224CCE43100AAB658 /* StockModel.swift */; };
 		C7D2EAE524CCE43100AAB658 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2EAE324CCE43100AAB658 /* Stock.swift */; };
+		C7D4489D24DF69C000F17A35 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D4489C24DF69C000F17A35 /* PaddedLabel.swift */; };
+		C7D4489F24DF723D00F17A35 /* HoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D4489E24DF723D00F17A35 /* HoldingCell.swift */; };
+		C7D5C13C24DFF9530021B104 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5C13B24DFF9530021B104 /* UserDefaults.swift */; };
 		C7EC99A524D7C0700047914D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7EC99A424D7C0700047914D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHoldingsViewController.swift; sourceTree = "<group>"; };
+		C737BCC624D39D120025A09D /* HoldingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingsViewController.swift; sourceTree = "<group>"; };
 		C77E977724D8C24F000C6EC6 /* StockTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTableViewCell.swift; sourceTree = "<group>"; };
 		C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHoldingViewController.swift; sourceTree = "<group>"; };
 		C7AED75224D5EF4A00BBEA2F /* Holding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Holding.swift; sourceTree = "<group>"; };
@@ -33,8 +35,10 @@
 		C7D2EAD324CC00DB00AAB658 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C7D2EAD524CC00DC00AAB658 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7D2EADA24CC00DC00AAB658 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C7D2EAE224CCE43100AAB658 /* StockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
 		C7D2EAE324CCE43100AAB658 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
+		C7D4489C24DF69C000F17A35 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
+		C7D4489E24DF723D00F17A35 /* HoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingCell.swift; sourceTree = "<group>"; };
+		C7D5C13B24DFF9530021B104 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C7EC99A424D7C0700047914D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,19 +72,21 @@
 		C7D2EACB24CC00DB00AAB658 /* LiveStocks */ = {
 			isa = PBXGroup;
 			children = (
-				C7D2EAE224CCE43100AAB658 /* StockModel.swift */,
+				C7D5C13B24DFF9530021B104 /* UserDefaults.swift */,
+				C77E977724D8C24F000C6EC6 /* StockTableViewCell.swift */,
+				C7D4489E24DF723D00F17A35 /* HoldingCell.swift */,
+				C7D4489C24DF69C000F17A35 /* PaddedLabel.swift */,
 				C7AED75224D5EF4A00BBEA2F /* Holding.swift */,
 				C7D2EAE324CCE43100AAB658 /* Stock.swift */,
-				C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */,
-				C737BCC624D39D120025A09D /* StockHoldingsViewController.swift */,
 				C7AED75024D516A800BBEA2F /* AddHoldingViewController.swift */,
+				C737BCC624D39D120025A09D /* HoldingsViewController.swift */,
+				C7D2EAD024CC00DB00AAB658 /* MainViewController.swift */,
 				C7D2EAD224CC00DB00AAB658 /* Main.storyboard */,
 				C7D2EAD524CC00DC00AAB658 /* Assets.xcassets */,
 				C7D2EADA24CC00DC00AAB658 /* Info.plist */,
 				C7D2EACC24CC00DB00AAB658 /* AppDelegate.swift */,
 				C7D2EACE24CC00DB00AAB658 /* SceneDelegate.swift */,
 				C7EC99A424D7C0700047914D /* LaunchScreen.storyboard */,
-				C77E977724D8C24F000C6EC6 /* StockTableViewCell.swift */,
 			);
 			path = LiveStocks;
 			sourceTree = "<group>";
@@ -157,13 +163,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7D2EAD124CC00DB00AAB658 /* MainViewController.swift in Sources */,
-				C7D2EAE424CCE43100AAB658 /* StockModel.swift in Sources */,
 				C7D2EAE524CCE43100AAB658 /* Stock.swift in Sources */,
-				C737BCC724D39D120025A09D /* StockHoldingsViewController.swift in Sources */,
+				C737BCC724D39D120025A09D /* HoldingsViewController.swift in Sources */,
+				C7D4489F24DF723D00F17A35 /* HoldingCell.swift in Sources */,
 				C77E977824D8C24F000C6EC6 /* StockTableViewCell.swift in Sources */,
 				C7D2EACD24CC00DB00AAB658 /* AppDelegate.swift in Sources */,
 				C7AED75324D5EF4A00BBEA2F /* Holding.swift in Sources */,
 				C7AED75124D516A800BBEA2F /* AddHoldingViewController.swift in Sources */,
+				C7D4489D24DF69C000F17A35 /* PaddedLabel.swift in Sources */,
+				C7D5C13C24DFF9530021B104 /* UserDefaults.swift in Sources */,
 				C7D2EACF24CC00DB00AAB658 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,20 +9,22 @@
 import UIKit
 
 // Also used for editing a holding by inputting existing data into the view
-class AddHoldingViewController: UIViewController {
+class AddHoldingViewController: UITableViewController {
     var stock: Stock? = nil
     var newStock: Bool = false
     var oldHolding: Holding? = nil
-    var sharesData: Int = -1, priceData: Float = -1.0
-    var btnView = UIView()
-    var btnLabel = UILabel()
+    var sharesData: Int = -1, priceData: Float = -1.0, commData: Float = -1.0
     
     @IBOutlet weak var shares: UITextField!
     @IBOutlet weak var price: UITextField!
+    @IBOutlet weak var commission: UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.tableFooterView = UIView()
+
         // if no previous modal, replicate the back button
         if stock?.holdings.count == 0 {
             addBackButton(string: stock!.symbol)
@@ -32,15 +34,18 @@ class AddHoldingViewController: UIViewController {
         if oldHolding != nil {
             shares.text = String(oldHolding?.shares ?? -1)
             price.text = String(oldHolding?.price ?? -1.0)
+            commission.text = String(oldHolding?.commission ?? -1.0)
         }
     }
+    
+    // MARK:- Setup
     
     func addBackButton(string: String) {
         // position of btn view on navbar
         let btnView = UIView(frame: CGRect(x:0, y:6, width: 58.5, height: 44))
         // position of label in btn view
         let label = UILabel(frame: CGRect(x: 24.5, y: 13, width: 200, height: 0))
-        label.font = UIFont.systemFont(ofSize: 17)
+        label.font = .systemFont(ofSize: 17)
         label.textAlignment = .left
         label.textColor = .systemBlue
         label.text = string
@@ -74,13 +79,12 @@ class AddHoldingViewController: UIViewController {
         guard segue.identifier == "saveHolding" else {return}
         // if holding exists, change data
         if oldHolding != nil {
-            oldHolding?.shares = sharesData
-            oldHolding?.price = priceData
-            // if no holding exists, create new one
+            oldHolding?.set(shares: sharesData, price: priceData, commission: commData)
         } else {
-            stock?.holdings.append(Holding(shares: sharesData, price: priceData))
+            // if no holding exists, create new one
+            stock?.holdings.append(Holding(shares: sharesData, price: priceData, commission: commData))
         }
-        // add stock from search to tableview
+        // add stock from search to mainVC
         if newStock {
             let mainVC = segue.destination as! MainViewController
             mainVC.addStock(stock: stock!)
@@ -95,8 +99,12 @@ class AddHoldingViewController: UIViewController {
         sharesString = sharesString.replacingOccurrences(of: ",", with: "")
         var priceString = price.text!.replacingOccurrences(of: " ", with: "")
         priceString = priceString.replacingOccurrences(of: ",", with: "")
+        let commString = commission.text!.replacingOccurrences(of: " ", with: "")
         // if string can be parsed into numbers, save data
         if let sharesInput = Int(sharesString), let priceInput = Float(priceString) {
+            // blank commision means 0
+            if commString == "" { commData = 0 }
+            else if let commInput = Float(commString) { commData = commInput }
             sharesData = sharesInput
             priceData = priceInput
             return true

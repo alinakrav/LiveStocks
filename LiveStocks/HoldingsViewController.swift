@@ -1,5 +1,5 @@
 //
-//  StockHoldingsViewController.swift
+//  HoldingsViewController.swift
 //  LiveStocks
 //
 //  Created by Alina Kravchenko on 2020-07-30.
@@ -8,21 +8,35 @@
 
 import UIKit
 
-class StockHoldingsViewController: UITableViewController {
+class HoldingsViewController: UITableViewController {
 
-    // This variable will hold the data being passed from the First View Controller
     var stock: Stock? = nil
     var newStock: Bool = false
+    let numFormatter = NumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = stock?.symbol
+        makeFormatter()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Title is stock's full name when view is shown
+        navigationItem.title = stock?.name
+    }
+    
+    // MARK:- Setup
+    
+    // formatter adds delimiters (commas) and limits decimal places
+    func makeFormatter() {
+        numFormatter.numberStyle = .decimal
+        numFormatter.maximumFractionDigits = 2
+        numFormatter.minimumFractionDigits = 2
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table view data
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -32,11 +46,14 @@ class StockHoldingsViewController: UITableViewController {
 
     // show holding data in cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "holdingCell", for: indexPath)
-        let holding : Holding
-        holding = stock!.holdings[indexPath.row]
-        cell.textLabel!.text = "\(holding.shares) shares"
-        cell.detailTextLabel!.text = "@ $" + String(format: "%.2f", holding.price)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "holdingCell", for: indexPath) as! HoldingCell
+        // get holding for current cell index
+        let holding = stock!.holdings[indexPath.row]
+        
+        cell.title.text = "\(holding.shares) @ $\(holding.price)"
+        // format and display amount label
+        cell.detail.format(n: holding.gains, sign: true, formatter: numFormatter)
+        cell.detail.colorCode(n: holding.gains)
         return cell
     }
 
@@ -47,6 +64,8 @@ class StockHoldingsViewController: UITableViewController {
         let identifier = segue.identifier
         // limit method to specific segues
         guard identifier == "addHolding" || identifier == "editHolding" else { return }
+        // Change title to symbol to show in "Back" button from next view
+        navigationItem.title = stock?.symbol
 
         let addHoldingVC = segue.destination as! AddHoldingViewController
         addHoldingVC.stock = stock

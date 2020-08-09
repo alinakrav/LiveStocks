@@ -8,14 +8,21 @@
 
 import Foundation
 
-class Holding {
+class Holding: Codable {
     var shares: Int
     var price: Float
     var commission: Float
+    var gains: Float = 0
     
-    init(shares: Int, price: Float) {
+    init(shares: Int, price: Float, commission: Float) {
         self.shares = shares
         self.price = price
-        self.commission = 9.95
+        self.commission = commission
+    }
+    
+    func set(shares: Int, price: Float, commission: Float) {
+        self.shares = shares
+        self.price = price
+        self.commission = commission
     }
 }
