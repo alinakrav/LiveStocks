@@ -20,12 +20,12 @@ class Stock: Codable {
     }
     
     // Async call to get quote - can only be used whenever price display is needed immediately
-    static func getQuote(symbol: String, completion: @escaping (Float) -> Void) {
+    static func getQuote(symbol: String, completion: @escaping (Float?) -> Void) {
         // API call
         let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/quote/latestPrice?token=pk_a85004ad0796453fb7110fad20e2a34a")!
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data, error == nil {
-                guard let quote = Float(String(data: data, encoding: .utf8)!) else { return }
+                let quote = Float(String(data: data, encoding: .utf8)!)
                 DispatchQueue.main.async {
                     completion(quote)
                 }

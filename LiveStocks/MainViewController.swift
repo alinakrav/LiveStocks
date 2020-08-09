@@ -29,14 +29,15 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadStocks()
         makeFormatter()
         setupSearchController()
-        loadStocks()
+        refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
     }
     
     // called at launch and after search, updates navbar total
     override func viewDidAppear(_ animated: Bool) {
-        loadNavBar()
+        updateGainsWithDelay()
     }
     
     // MARK: - Setup
@@ -58,36 +59,6 @@ class MainViewController: UITableViewController {
         }
         allStocks.append(myStocks)
         allStocks.append([Stock]())
-    }
-    
-    // call updateTotalGains method after a 1 sec delay
-    func loadNavBar() {
-        let task = DispatchWorkItem { [weak self] in
-            self?.updateTotalGains()
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: task)
-    }
-    
-    // calculate and display total holdings gain in navbar
-    func updateTotalGains() {
-        var totalGains: Float = 0
-        for stock in myStocks {
-            var stockGains: Float = 0
-            for holding in stock.holdings {
-                stockGains += holding.gains
-            }
-            totalGains += stockGains
-        }
-        // format string
-        navigationItem.title = (totalGains == 0 ? "" : (totalGains > 0 ? "+" : "-")) + " $" + numFormatter.string(from: NSNumber(value: abs(totalGains)))!
-        // change text color based on amount
-        let textAttributes: [NSAttributedString.Key : Any]
-        if totalGains < 0 {
-            textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red: 0.84, green: 0.26, blue: 0.27, alpha: 1)]
-        } else {
-            textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red: 0.23, green: 0.79, blue: 0.44, alpha: 1)]
-        }
-        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
     }
     
     // add new Stock object to myStocks (made to update array from AddHoldingVC)
@@ -112,6 +83,48 @@ class MainViewController: UITableViewController {
         }
     }
     
+    // call updateGains method after a 1 sec delay
+    func updateGainsWithDelay() {
+        let task = DispatchWorkItem { [weak self] in
+            self?.updateGains()
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: task)
+    }
+    
+    // calculate and display total holdings gain in navbar
+    func updateGains() {
+        var totalGains: Float = 0
+        for stock in myStocks {
+            var stockGains: Float = 0
+            for holding in stock.holdings {
+                stockGains += holding.gains
+            }
+            totalGains += stockGains
+        }
+        // format string
+        navigationItem.title = (totalGains == 0 ? "" : (totalGains > 0 ? "+" : "-")) + " $" + numFormatter.string(from: NSNumber(value: abs(totalGains)))!
+        // change text color based on amount
+        let textAttributes: [NSAttributedString.Key : Any]
+        if totalGains < 0 {
+            textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red: 0.84, green: 0.26, blue: 0.27, alpha: 1)]
+        } else {
+            textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red: 0.23, green: 0.79, blue: 0.44, alpha: 1)]
+        }
+        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
+    }
+    
+    // update data in view when pulled down to refresh
+    @objc func refresh(sender: Any)
+    {
+        self.tableView.reloadData()
+        updateGains()
+        let task = DispatchWorkItem { [weak self] in
+            self?.refreshControl?.endRefreshing()
+        }
+        // length of refresh animation
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: task)
+    }
+    
     // MARK: - Table view data
     
     // return number of sections
@@ -131,15 +144,23 @@ class MainViewController: UITableViewController {
         let stock: Stock
         stock = allStocks[indexPath.section][indexPath.row]
         // fill cell with stock data
-        fillStockCell(cell: cell, stock: stock)
+        fillStockCell(cell: cell, stock: stock, index: indexPath)
         return cell
     }
     
     // fill cell with data
-    func fillStockCell(cell: StockTableViewCell, stock: Stock) {
+    func fillStockCell(cell: StockTableViewCell, stock: Stock, index: IndexPath) {
         cell.symbol.text = stock.symbol
         cell.name.text = stock.name
         Stock.getQuote(symbol: stock.symbol) { quote in
+            // clear numbers when quote unavailable
+            guard quote != nil else {
+                cell.amount.colorCode(n: nil)
+                cell.amount.text = "Not Found"
+                cell.sideQuote.text = nil
+                return
+            }
+            
             // vars to hold nums for the 2 labels
             var amount: Float
             var sideQuote: Float? = nil
@@ -147,7 +168,7 @@ class MainViewController: UITableViewController {
             // just show quote if no holdings
             if stock.holdings.count == 0 {
                 cell.amount.colorCode(n: nil)
-                amount = quote
+                amount = quote!
     			// sideQuote stays nil
                 
             // calculate gains if holdings exist
@@ -156,7 +177,7 @@ class MainViewController: UITableViewController {
                 // calculate gains
                 for holding in stock.holdings {
                     let shares = Float(holding.shares)
-                    holding.gains = quote*shares - holding.price*shares - holding.commission
+                    holding.gains = quote!*shares - holding.price*shares - holding.commission
                     gains += holding.gains
                 }
                 // change amount colour
@@ -310,7 +331,7 @@ class MainViewController: UITableViewController {
         searchController.isActive = false
     
         // called after saving holding, updates navbar total
-        loadNavBar()
+        updateGainsWithDelay()
 
         // store data once when holding is saved
         do {
