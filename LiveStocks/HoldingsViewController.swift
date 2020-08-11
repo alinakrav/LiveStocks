@@ -13,7 +13,7 @@ class HoldingsViewController: UITableViewController {
     var stock: Stock? = nil
     var newStock: Bool = false
     var numFormatter: NumberFormatter? = nil
-    var defaultCommission: Float = -1.0
+    var defaultCommission: Float = 0
     var deleted = false
     
     

@@ -14,7 +14,7 @@ class MainViewController: UITableViewController {
     
     // STOCK DATA
     // default commission value (since it's usually constant)
-    var defaultCommission: Float = -1.0
+    var defaultCommission: Float = 0
     // array for stocks saved to main table view
     var myStocks = [Stock]()
     var myStocksSymbols = [String]()

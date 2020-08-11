@@ -13,7 +13,7 @@ class AddHoldingViewController: UITableViewController {
     var stock: Stock? = nil
     var newStock: Bool = false
     var oldHolding: Holding? = nil
-    var defaultCommission: Float = -1.0
+    var defaultCommission: Float = 0
     var sharesData: Int = -1, priceData: Float = -1.0, commData: Float = -1.0
     
     @IBOutlet weak var shares: UITextField!
@@ -58,7 +58,7 @@ class AddHoldingViewController: UITableViewController {
             // set default commission value for new holding
         else {
             // enter default value if it exists (blank will already work as 0)
-            commission.text = defaultCommission > 0 ? String(defaultCommission) : nil
+            commission.text = defaultCommission != 0 ? String(defaultCommission) : nil
             // select button when default commission is entered
             defaultBtn.isSelected = true
         }
@@ -119,7 +119,7 @@ class AddHoldingViewController: UITableViewController {
             mainVC.defaultCommission = commData
         } else {
             // remove default value
-            mainVC.defaultCommission = -1.0
+            mainVC.defaultCommission = 0
         }
     }
     
