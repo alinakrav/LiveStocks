@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EBr-MU-PrR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EBr-MU-PrR">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -91,6 +91,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Stocks" id="Ne6-Zm-FMj"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="AC7-UP-ZTz">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <attributedString key="attributedTitle"/>
                     </refreshControl>
@@ -155,7 +156,7 @@
                     <navigationItem key="navigationItem" id="dqb-qH-Wqa">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="eh8-8R-AIu">
                             <connections>
-                                <segue destination="oeI-8a-Pe8" kind="unwind" unwindAction="unwindToOne:" id="h20-41-brU"/>
+                                <segue destination="oeI-8a-Pe8" kind="unwind" identifier="done" unwindAction="unwindToMain:" id="h20-41-brU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Yn9-k6-95S">
@@ -298,7 +299,7 @@
                     <navigationItem key="navigationItem" title="Add Holding" largeTitleDisplayMode="never" id="zVF-6r-6H5">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="wgi-M6-vVL">
                             <connections>
-                                <segue destination="cmi-Iy-Jig" kind="unwind" identifier="saveHolding" unwindAction="unwindToOne:" id="zij-tZ-4fv"/>
+                                <segue destination="cmi-Iy-Jig" kind="unwind" identifier="saveHolding" unwindAction="unwindToMain:" id="zij-tZ-4fv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -370,6 +371,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zRj-oS-Pwf"/>
+        <segue reference="v3P-yJ-Hkw"/>
     </inferredMetricsTieBreakers>
 </document>

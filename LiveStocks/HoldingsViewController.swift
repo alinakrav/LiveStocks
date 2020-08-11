@@ -12,26 +12,18 @@ class HoldingsViewController: UITableViewController {
 
     var stock: Stock? = nil
     var newStock: Bool = false
-    let numFormatter = NumberFormatter()
+    var numFormatter: NumberFormatter? = nil
+    var deleted = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        makeFormatter()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Title is stock's full name when view is shown
         navigationItem.title = stock?.name
-    }
-    
-    // MARK:- Setup
-    
-    // formatter adds delimiters (commas) and limits decimal places
-    func makeFormatter() {
-        numFormatter.numberStyle = .decimal
-        numFormatter.maximumFractionDigits = 2
-        numFormatter.minimumFractionDigits = 2
     }
 
     // MARK: - Table view data
@@ -52,9 +44,31 @@ class HoldingsViewController: UITableViewController {
         
         cell.title.text = "\(holding.shares) @ $\(holding.price)"
         // format and display amount label
-        cell.detail.format(n: holding.gains, sign: true, formatter: numFormatter)
+        cell.detail.format(n: holding.gains, sign: true, formatter: numFormatter!)
         cell.detail.colorCode(n: holding.gains)
         return cell
+    }
+    
+    // delete cell on swipe
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            stock?.holdings.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            // will signal MainVC to update and save data
+            deleted = true
+            // dismiss if last holding deleted
+            if tableView.numberOfRows(inSection: 0) == 0 {
+                performSegue(withIdentifier: "done", sender: self)
+            }
+        }
+    }
+    
+    // dragging modadl down goes to unwindToMain
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if navigationController!.isBeingDismissed {
+            performSegue(withIdentifier: "done", sender: self)
+        }
     }
 
 

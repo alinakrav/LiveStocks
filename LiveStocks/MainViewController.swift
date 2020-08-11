@@ -42,6 +42,15 @@ class MainViewController: UITableViewController {
     
     // MARK: - Setup
     
+    func saveData() {
+        do {
+            try defaults.setObject(myStocks, forKey: "myStocks")
+            defaults.set(myStocksSymbols, forKey: "myStocksSymbols")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // formatter adds delimiters (commas) and limits decimal places
     func makeFormatter() {
         numFormatter.numberStyle = .decimal
@@ -153,7 +162,7 @@ class MainViewController: UITableViewController {
         cell.symbol.text = stock.symbol
         cell.name.text = stock.name
         Stock.getQuote(symbol: stock.symbol) { quote in
-            // clear numbers when quote unavailable
+            // clear numbers when quote unavailable (or label will be reused)
             guard quote != nil else {
                 cell.amount.colorCode(n: nil)
                 cell.amount.text = "Not Found"
@@ -188,6 +197,25 @@ class MainViewController: UITableViewController {
 			// format and display gains and/or quote - detect gains label by checking if sideQuote exists
             cell.amount.format(n: amount, sign: sideQuote != nil, formatter: self.numFormatter)
             cell.sideQuote.format(n: sideQuote, sign: false, formatter: self.numFormatter)
+        }
+    }
+    
+    // enable editing (deleting) for Watchlist section
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 0 ? true : false
+    }
+    
+    // delete cell on swipe
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            myStocks.remove(at: indexPath.row)
+            myStocksSymbols.remove(at: indexPath.row)
+            allStocks[0] = myStocks
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            updateGains()
+            // store updated stock array
+            saveData()
         }
     }
     
@@ -304,7 +332,6 @@ class MainViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    // Called before cellTapped segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let identifier = segue.identifier
         let indexPath = tableView.indexPathForSelectedRow
@@ -312,7 +339,9 @@ class MainViewController: UITableViewController {
         let navVC = (segue.destination as? UINavigationController)?.topViewController
         switch identifier {
         case "viewHoldings":
-            (navVC as! HoldingsViewController).stock = stock
+            let nextVC = navVC as! HoldingsViewController
+            nextVC.stock = stock
+            nextVC.numFormatter = numFormatter
         case "addHoldingFromSearch":
             let nextVC = navVC as! AddHoldingViewController
         	nextVC.stock = stock
@@ -325,21 +354,19 @@ class MainViewController: UITableViewController {
     }
     
     // Called when other views exit back to main view
-    @IBAction func unwindToOne(_ sender: UIStoryboardSegue) {
-        // exit search if new holding was saved
-        guard sender.identifier == "saveHolding" else {return}
-        searchController.isActive = false
-    
-        // called after saving holding, updates navbar total
-        updateGainsWithDelay()
-
-        // store data once when holding is saved
-        do {
-            try defaults.setObject(myStocks, forKey: "myStocks")
-            defaults.set(myStocksSymbols, forKey: "myStocksSymbols")
-        } catch {
-            print(error.localizedDescription)
+    @IBAction func unwindToMain(_ sender: UIStoryboardSegue) {
+        let identifier = sender.identifier
+        guard identifier == "saveHolding" || identifier == "done" else {return}
+        // update stocks when holdings are saved and deleted
+        if sender.identifier == "saveHolding" {
+            searchController.isActive = false
         }
+        else if !(sender.source as! HoldingsViewController).deleted {
+            return
+        }
+        tableView.reloadData()
+        updateGainsWithDelay()
+        saveData()
     }
 }
 
