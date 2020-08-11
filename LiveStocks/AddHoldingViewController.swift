@@ -13,32 +13,56 @@ class AddHoldingViewController: UITableViewController {
     var stock: Stock? = nil
     var newStock: Bool = false
     var oldHolding: Holding? = nil
+    var defaultCommission: Float = -1.0
     var sharesData: Int = -1, priceData: Float = -1.0, commData: Float = -1.0
     
     @IBOutlet weak var shares: UITextField!
     @IBOutlet weak var price: UITextField!
     @IBOutlet weak var commission: UITextField!
+    @IBOutlet weak var defaultBtn: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // hide empty cell separators
         tableView.tableFooterView = UIView()
-
+        
         // if no previous modal, replicate the back button
         if stock?.holdings.count == 0 {
             addBackButton(string: stock!.symbol)
         }
         
+        enterData()
+        defaultBtn.addTarget(self, action: #selector(checkBtn), for: .touchUpInside)
+    }
+    
+    // sets commission value to default
+    @objc func checkBtn() {
+        // check/uncheck button
+        defaultBtn.isSelected = !defaultBtn.isSelected
+    }
+    
+    // MARK:- Setup
+    
+    // fill out fields with existing or default data
+    func enterData() {
         // if holding is being edited, input existing data
         if oldHolding != nil {
             shares.text = String(oldHolding?.shares ?? -1)
             price.text = String(oldHolding?.price ?? -1.0)
-            commission.text = String(oldHolding?.commission ?? -1.0)
+            commission.text = oldHolding?.commission != 0 ? String(oldHolding?.commission ?? -1.0) : nil
+            // select button if default commission is entered
+            if defaultCommission == oldHolding?.commission  { defaultBtn.isSelected = true }
+        }
+            // set default commission value for new holding
+        else {
+            // enter default value if it exists (blank will already work as 0)
+            commission.text = defaultCommission > 0 ? String(defaultCommission) : nil
+            // select button when default commission is entered
+            defaultBtn.isSelected = true
         }
     }
-    
-    // MARK:- Setup
     
     func addBackButton(string: String) {
         // position of btn view on navbar
@@ -65,11 +89,11 @@ class AddHoldingViewController: UITableViewController {
         clickableBtn.frame = CGRect(x:0, y:0, width: 58.5, height: 44)
         clickableBtn.addTarget(self, action: #selector(goBack), for: .touchUpInside)
         btnView.addSubview(clickableBtn)
-
+        
         // add btnView to navbar as subview
         navigationController?.navigationBar.addSubview(btnView)
     }
-
+    
     @objc func goBack() { dismiss(animated: true, completion: nil) }
     
     // MARK: - Navigation
@@ -85,9 +109,17 @@ class AddHoldingViewController: UITableViewController {
             stock?.holdings.append(Holding(shares: sharesData, price: priceData, commission: commData))
         }
         // add stock from search to mainVC
+        let mainVC = segue.destination as! MainViewController
         if newStock {
-            let mainVC = segue.destination as! MainViewController
             mainVC.addStock(stock: stock!)
+        }
+        
+        // set default commission based on new holding
+        if defaultBtn.isSelected {
+            mainVC.defaultCommission = commData
+        } else {
+            // remove default value
+            mainVC.defaultCommission = -1.0
         }
     }
     

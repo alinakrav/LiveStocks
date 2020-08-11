@@ -11,8 +11,10 @@ import UIKit
 class MainViewController: UITableViewController {
     // NSDefaults to store data
     let defaults = UserDefaults.standard
-
-    // STOCK DATA ARRAYS
+    
+    // STOCK DATA
+    // default commission value (since it's usually constant)
+    var defaultCommission: Float = -1.0
     // array for stocks saved to main table view
     var myStocks = [Stock]()
     var myStocksSymbols = [String]()
@@ -29,7 +31,7 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadStocks()
+        loadData()
         makeFormatter()
         setupSearchController()
         refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
@@ -46,6 +48,7 @@ class MainViewController: UITableViewController {
         do {
             try defaults.setObject(myStocks, forKey: "myStocks")
             defaults.set(myStocksSymbols, forKey: "myStocksSymbols")
+            defaults.set(defaultCommission, forKey: "defaultCommission")
         } catch {
             print(error.localizedDescription)
         }
@@ -59,10 +62,11 @@ class MainViewController: UITableViewController {
     }
     
     // load stock array from NSDefaults
-    func loadStocks() {
+    func loadData() {
         do {
             myStocks = try defaults.getObject(forKey: "myStocks", castTo: [Stock].self)
             myStocksSymbols = defaults.stringArray(forKey: "myStocksSymbols") ?? [String]()
+            defaultCommission = defaults.float(forKey: "defaultCommission")
         } catch {
             print(error.localizedDescription)
         }
@@ -83,7 +87,7 @@ class MainViewController: UITableViewController {
         let searchHeight = searchController.searchBar.frame.height
         // adjust for initial number of rows
         let cellHeight = CGFloat(56*myStocks.count)
-
+        
         let height = tableFrame - navHeight - searchHeight - cellHeight + 5
         if height < 0 {
             blankSpace.frame.size.height = 0
@@ -178,9 +182,9 @@ class MainViewController: UITableViewController {
             if stock.holdings.count == 0 {
                 cell.amount.colorCode(n: nil)
                 amount = quote!
-    			// sideQuote stays nil
+                // sideQuote stays nil
                 
-            // calculate gains if holdings exist
+                // calculate gains if holdings exist
             } else {
                 var gains: Float = 0
                 // calculate gains
@@ -194,7 +198,7 @@ class MainViewController: UITableViewController {
                 amount = gains
                 sideQuote = quote
             }
-			// format and display gains and/or quote - detect gains label by checking if sideQuote exists
+            // format and display gains and/or quote - detect gains label by checking if sideQuote exists
             cell.amount.format(n: amount, sign: sideQuote != nil, formatter: self.numFormatter)
             cell.sideQuote.format(n: sideQuote, sign: false, formatter: self.numFormatter)
         }
@@ -335,16 +339,18 @@ class MainViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let identifier = segue.identifier
         let indexPath = tableView.indexPathForSelectedRow
-		let stock = allStocks[indexPath!.section][indexPath!.row]
+        let stock = allStocks[indexPath!.section][indexPath!.row]
         let navVC = (segue.destination as? UINavigationController)?.topViewController
         switch identifier {
         case "viewHoldings":
             let nextVC = navVC as! HoldingsViewController
             nextVC.stock = stock
+            nextVC.defaultCommission = defaultCommission
             nextVC.numFormatter = numFormatter
         case "addHoldingFromSearch":
             let nextVC = navVC as! AddHoldingViewController
-        	nextVC.stock = stock
+            nextVC.stock = stock
+            nextVC.defaultCommission = defaultCommission
             if indexPath?.section == 1 {
                 nextVC.newStock = true
             }

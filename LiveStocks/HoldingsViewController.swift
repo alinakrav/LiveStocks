@@ -9,10 +9,11 @@
 import UIKit
 
 class HoldingsViewController: UITableViewController {
-
+    
     var stock: Stock? = nil
     var newStock: Bool = false
     var numFormatter: NumberFormatter? = nil
+    var defaultCommission: Float = -1.0
     var deleted = false
     
     
@@ -25,17 +26,17 @@ class HoldingsViewController: UITableViewController {
         // Title is stock's full name when view is shown
         navigationItem.title = stock?.name
     }
-
+    
     // MARK: - Table view data
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stock!.holdings.count
     }
-
+    
     // show holding data in cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "holdingCell", for: indexPath) as! HoldingCell
@@ -70,17 +71,16 @@ class HoldingsViewController: UITableViewController {
             performSegue(withIdentifier: "done", sender: self)
         }
     }
-
-
+    
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let identifier = segue.identifier
-        // limit method to specific segues
         guard identifier == "addHolding" || identifier == "editHolding" else { return }
         // Change title to symbol to show in "Back" button from next view
         navigationItem.title = stock?.symbol
-
+        
         let addHoldingVC = segue.destination as! AddHoldingViewController
         addHoldingVC.stock = stock
         // tells AddHoldingVC if stock exists in mainVC table
@@ -88,6 +88,7 @@ class HoldingsViewController: UITableViewController {
         if identifier == "editHolding" {
             addHoldingVC.oldHolding = stock?.holdings[tableView.indexPathForSelectedRow!.row]
         }
+        addHoldingVC.defaultCommission = defaultCommission
     }
     
 }

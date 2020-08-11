@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EBr-MU-PrR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EBr-MU-PrR">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -175,14 +175,14 @@
         <scene sceneID="KtL-Eu-Bdt">
             <objects>
                 <tableViewController id="7S2-7h-jvQ" customClass="AddHoldingViewController" customModule="LiveStocks" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rZR-SY-unk">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="130" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rZR-SY-unk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
                             <tableViewSection id="agG-4g-A5v">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="130" id="g0g-I3-KbE">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="g0g-I3-KbE">
                                         <rect key="frame" x="0.0" y="28" width="414" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="g0g-I3-KbE" id="v6g-iX-2Dy">
@@ -219,7 +219,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="130" id="RTK-iF-cdQ" userLabel="Price per Share">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="RTK-iF-cdQ" userLabel="Price per Share">
                                         <rect key="frame" x="0.0" y="158" width="414" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RTK-iF-cdQ" id="uT4-Ua-UJV">
@@ -254,11 +254,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="94" id="ty7-FG-mR2">
-                                        <rect key="frame" x="0.0" y="288" width="414" height="94"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ty7-FG-mR2">
+                                        <rect key="frame" x="0.0" y="288" width="414" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ty7-FG-mR2" id="xRO-2C-tk2">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="94"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Commission" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hz-F9-I62" userLabel="Label">
@@ -274,17 +274,32 @@
                                                     <rect key="frame" x="20" y="0.0" width="374" height="94"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="8hj-QZ-z1S"/>
+                                                        <constraint firstAttribute="height" constant="94" id="ch8-2q-Pel"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grr-Us-ezG">
+                                                    <rect key="frame" x="17" y="96" width="90.5" height="23"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="23" id="8o3-Gt-lxq"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <state key="normal" title="Set default" image="square" catalog="system">
+                                                        <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                    <state key="selected" image="checkmark.square" catalog="system"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="grr-Us-ezG" firstAttribute="top" secondItem="cJT-Yu-BKI" secondAttribute="bottom" priority="750" constant="2" id="7aR-I0-XZz"/>
                                                 <constraint firstItem="cJT-Yu-BKI" firstAttribute="trailing" secondItem="xRO-2C-tk2" secondAttribute="trailingMargin" id="7sn-Q6-plV"/>
                                                 <constraint firstAttribute="bottom" secondItem="cJT-Yu-BKI" secondAttribute="bottom" id="9qQ-6O-isi"/>
+                                                <constraint firstItem="6hz-F9-I62" firstAttribute="top" secondItem="xRO-2C-tk2" secondAttribute="topMargin" constant="14" id="Kdp-GX-Fxu"/>
                                                 <constraint firstItem="6hz-F9-I62" firstAttribute="leading" secondItem="xRO-2C-tk2" secondAttribute="leadingMargin" id="MaX-G7-gmq"/>
-                                                <constraint firstItem="6hz-F9-I62" firstAttribute="centerY" secondItem="xRO-2C-tk2" secondAttribute="centerY" id="Qqz-Fj-Yuc"/>
                                                 <constraint firstItem="cJT-Yu-BKI" firstAttribute="top" secondItem="xRO-2C-tk2" secondAttribute="top" id="Wos-h5-0gO"/>
+                                                <constraint firstItem="grr-Us-ezG" firstAttribute="bottom" secondItem="xRO-2C-tk2" secondAttribute="bottomMargin" id="sVA-N5-VKl"/>
+                                                <constraint firstItem="grr-Us-ezG" firstAttribute="leading" secondItem="xRO-2C-tk2" secondAttribute="leading" constant="17" id="vGm-gY-C2F"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -305,6 +320,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="commission" destination="cJT-Yu-BKI" id="SVc-yX-yhB"/>
+                        <outlet property="defaultBtn" destination="grr-Us-ezG" id="hu1-B6-qPL"/>
                         <outlet property="price" destination="PCc-Gy-S0N" id="H4d-aU-VeB"/>
                         <outlet property="shares" destination="RPG-Gu-yhh" id="pXz-eA-7sG"/>
                     </connections>
@@ -370,6 +386,10 @@
             <point key="canvasLocation" x="1838" y="267"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="checkmark.square" catalog="system" width="64" height="56"/>
+        <image name="square" catalog="system" width="64" height="56"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="v3P-yJ-Hkw"/>
     </inferredMetricsTieBreakers>
