@@ -12,6 +12,6 @@
 * Light and dark mode support
 
 #### Demo (Light):
-![Light mode demo](https://github.com/kravchenkoalina/LiveStocks/blob/assets/light.gif)
+[![Light mode demo](https://github.com/kravchenkoalina/LiveStocks/blob/assets/light.gif)](https://kravchenkoalina.github.io/media/light.mp4)
 #### Demo (Dark):
-![Dark mode demo](https://github.com/kravchenkoalina/LiveStocks/blob/assets/dark.gif)
+[![Dark mode demo](https://github.com/kravchenkoalina/LiveStocks/blob/assets/dark.gif)](https://kravchenkoalina.github.io/media/dark.mp4)
